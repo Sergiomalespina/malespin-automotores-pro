@@ -2,677 +2,246 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#090909">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MALESPINA Automotores PRO</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0
-}
-
-html{
-  scroll-behavior:smooth
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
 body{
   font-family:Arial,Helvetica,sans-serif;
   background:#080808;
   color:#fff;
-  line-height:1.5
 }
-
-button,input,select{
-  font:inherit
-}
-
-button{
-  cursor:pointer
-}
-
-a{
-  color:inherit;
-  text-decoration:none
-}
-
-.container{
-  width:min(1180px,92%);
-  margin:auto
-}
-
-/* HEADER */
-
 header{
+  background:#0d0d0d;
+  border-bottom:1px solid #292929;
+  padding:18px 5%;
   position:sticky;
   top:0;
-  z-index:100;
-  background:rgba(8,8,8,.94);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid #252525
+  z-index:20;
 }
-
-.navbar{
-  min-height:72px;
+.nav{
+  max-width:1200px;
+  margin:auto;
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  gap:20px
-}
-
-.logo{
-  font-size:21px;
-  font-weight:900;
-  letter-spacing:1px
-}
-
-.logo span{
-  color:#e50914
-}
-
-.navlinks{
-  display:flex;
-  gap:22px;
-  align-items:center
-}
-
-.navlinks a{
-  color:#bbb;
-  font-size:14px
-}
-
-.navlinks a:hover{
-  color:#fff
-}
-
-.nav-btn{
-  background:#e50914;
-  color:#fff;
-  border:0;
-  padding:11px 16px;
-  border-radius:9px;
-  font-weight:bold
-}
-
-/* HERO */
-
-.hero{
-  min-height:520px;
-  display:flex;
   align-items:center;
-  background:
-    radial-gradient(circle at 80% 20%,rgba(229,9,20,.25),transparent 35%),
-    radial-gradient(circle at 20% 80%,rgba(229,9,20,.12),transparent 35%)
+  gap:20px;
 }
-
-.hero-content{
-  max-width:760px;
-  padding:70px 0
+.logo{
+  font-size:22px;
+  font-weight:900;
 }
-
-.pro-label{
-  display:inline-block;
-  background:#260607;
-  border:1px solid #681116;
-  color:#ff555f;
-  padding:7px 12px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:bold;
-  margin-bottom:18px
+.logo span{color:#e00000}
+.admin{
+  color:#fff;
+  text-decoration:none;
+  border:1px solid #e00000;
+  padding:10px 16px;
+  border-radius:8px;
 }
-
+.hero{
+  padding:65px 5%;
+  background:linear-gradient(135deg,#080808,#170000);
+  text-align:center;
+}
 .hero h1{
-  font-size:clamp(38px,7vw,72px);
-  line-height:1.02;
-  margin-bottom:20px
+  font-size:clamp(32px,6vw,64px);
+  margin-bottom:15px;
 }
-
-.hero h1 span{
-  color:#e50914
-}
-
+.hero h1 span{color:#e00000}
 .hero p{
   color:#aaa;
   font-size:18px;
-  max-width:650px;
-  margin-bottom:28px
 }
-
-.hero-buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px
-}
-
-.btn{
-  border:1px solid #333;
-  background:#151515;
-  color:#fff;
-  padding:13px 18px;
-  border-radius:10px;
-  font-weight:bold
-}
-
-.btn.red{
-  background:#e50914;
-  border-color:#e50914
-}
-
-/* STATS */
-
 .stats{
+  max-width:1100px;
+  margin:-30px auto 40px;
+  padding:0 20px;
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  margin-top:-35px;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
   position:relative;
-  z-index:2
 }
-
 .stat{
-  background:#111;
+  background:#121212;
   border:1px solid #292929;
-  border-radius:16px;
-  padding:20px
+  border-radius:14px;
+  padding:22px;
+  text-align:center;
 }
-
-.stat small{
-  display:block;
-  color:#777;
-  margin-bottom:6px
-}
-
 .stat strong{
-  font-size:28px
+  display:block;
+  font-size:30px;
+  color:#e00000;
 }
-
-/* CATALOG */
-
-.section{
-  padding:80px 0
+.stat span{color:#999}
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
 }
-
-.section-title{
-  margin-bottom:25px
-}
-
-.section-title h2{
-  font-size:32px;
-  margin-bottom:7px
-}
-
-.section-title p{
-  color:#777
-}
-
 .filters{
   display:grid;
-  grid-template-columns:2fr repeat(4,1fr);
-  gap:10px;
-  margin-bottom:25px
+  grid-template-columns:2fr 1fr 1fr;
+  gap:12px;
+  margin-bottom:30px;
 }
-
-.filters input,
-.filters select{
+input,select{
   width:100%;
   background:#111;
   color:#fff;
-  border:1px solid #303030;
-  padding:12px;
-  border-radius:10px;
-  outline:none
+  border:1px solid #333;
+  border-radius:9px;
+  padding:14px;
+  outline:none;
 }
-
-.filters input:focus,
-.filters select:focus{
-  border-color:#e50914
+input:focus,select:focus{border-color:#e00000}
+#estado{
+  text-align:center;
+  padding:30px;
+  color:#aaa;
 }
-
-.results{
-  color:#777;
-  margin-bottom:15px;
-  font-size:14px
-}
-
-/* VEHICLES */
-
 .grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:18px
+  gap:20px;
 }
-
-.car{
+.card{
   background:#111;
   border:1px solid #292929;
-  border-radius:17px;
+  border-radius:16px;
   overflow:hidden;
   transition:.2s;
-  position:relative
 }
-
-.car:hover{
-  transform:translateY(-3px);
-  border-color:#4a4a4a
+.card:hover{
+  transform:translateY(-4px);
+  border-color:#e00000;
 }
-
-.car-image{
+.card-img{
   height:220px;
   background:#181818;
   position:relative;
-  overflow:hidden
 }
-
-.car-image img{
+.card-img img{
   width:100%;
   height:100%;
   object-fit:cover;
-  display:block
 }
-
-.badges{
-  position:absolute;
-  top:10px;
-  left:10px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  z-index:2
-}
-
 .badge{
-  background:#111d;
-  border:1px solid #444;
-  color:#fff;
-  padding:5px 8px;
-  border-radius:7px;
-  font-size:10px;
-  font-weight:bold
-}
-
-.badge.red{
-  background:#b30812;
-  border-color:#b30812
-}
-
-.badge.green{
-  background:#12351b;
-  border-color:#275d31;
-  color:#69ec80
-}
-
-.favorite{
   position:absolute;
-  right:10px;
-  top:10px;
-  width:39px;
-  height:39px;
-  border-radius:50%;
-  border:1px solid #444;
-  background:#111d;
-  color:#fff;
-  font-size:18px;
-  z-index:3
+  top:12px;
+  left:12px;
+  background:#e00000;
+  padding:6px 10px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:bold;
 }
-
-.favorite.active{
-  color:#ff3845;
-  border-color:#a20b14
+.card-body{padding:18px}
+.card h2{
+  font-size:21px;
+  margin-bottom:8px;
 }
-
-.car-body{
-  padding:17px
+.info{
+  color:#999;
+  font-size:14px;
+  margin-bottom:12px;
 }
-
-.car-body h3{
-  font-size:19px;
-  margin-bottom:5px
-}
-
-.car-meta{
-  color:#888;
-  font-size:13px;
-  margin-bottom:12px
-}
-
 .price{
-  font-size:22px;
-  font-weight:900;
-  margin-bottom:14px
-}
-
-.car-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px
-}
-
-.car-actions button{
-  border:1px solid #333;
-  background:#181818;
   color:#fff;
-  padding:10px;
-  border-radius:9px
+  font-size:24px;
+  font-weight:bold;
+  margin-bottom:15px;
 }
-
-.car-actions .whatsapp{
-  background:#138a3d;
-  border-color:#138a3d
-}
-
-/* LOADING */
-
-.loading,
-.no-results{
-  grid-column:1/-1;
-  padding:50px 20px;
-  text-align:center;
-  background:#111;
-  border:1px solid #292929;
-  border-radius:15px;
-  color:#999
-}
-
-/* CONTACT */
-
-.contact{
-  background:#101010;
-  border-top:1px solid #252525;
-  border-bottom:1px solid #252525
-}
-
-.contact-box{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:30px
-}
-
-.contact p{
-  color:#888;
-  margin-top:7px
-}
-
-/* FOOTER */
-
-footer{
-  padding:30px 0;
-  color:#666;
-  font-size:13px
-}
-
-/* MODAL */
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.82);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:15px;
-  z-index:500
-}
-
-.modal.show{
-  display:flex
-}
-
-.modal-box{
-  width:min(900px,100%);
-  max-height:92vh;
-  overflow:auto;
-  background:#111;
-  border:1px solid #333;
-  border-radius:18px;
-  position:relative
-}
-
-.close{
-  position:absolute;
-  right:14px;
-  top:14px;
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  border:1px solid #444;
-  background:#111d;
-  color:#fff;
-  z-index:5
-}
-
-.modal-image{
-  height:420px;
-  background:#090909
-}
-
-.modal-image img{
-  width:100%;
-  height:100%;
-  object-fit:contain
-}
-
-.modal-content{
-  padding:22px
-}
-
-.modal-content h2{
-  margin-bottom:6px
-}
-
-.modal-description{
-  color:#aaa;
-  white-space:pre-line;
-  margin:15px 0
-}
-
-.gallery{
+.buttons{
   display:flex;
   gap:8px;
-  overflow:auto;
-  padding:10px 22px
 }
-
-.gallery img{
-  width:80px;
-  height:60px;
-  object-fit:cover;
-  border-radius:7px;
-  border:2px solid transparent;
-  cursor:pointer
-}
-
-.gallery img.active{
-  border-color:#e50914
-}
-
-.modal-actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap
-}
-
-/* AI */
-
-.ai-button{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  width:62px;
-  height:62px;
+button{
   border:0;
-  border-radius:50%;
-  background:#e50914;
+  cursor:pointer;
+  border-radius:8px;
+  padding:11px;
+  font-weight:bold;
+}
+.view{
+  background:#e00000;
   color:#fff;
-  font-size:25px;
-  box-shadow:0 10px 35px #000;
-  z-index:300
-}
-
-.ai-panel{
-  position:fixed;
-  right:20px;
-  bottom:95px;
-  width:min(390px,calc(100% - 30px));
-  background:#111;
-  border:1px solid #383838;
-  border-radius:17px;
-  padding:17px;
-  display:none;
-  z-index:300;
-  box-shadow:0 20px 60px #000
-}
-
-.ai-panel.show{
-  display:block
-}
-
-.ai-panel h3{
-  margin-bottom:5px
-}
-
-.ai-panel p{
-  color:#888;
-  font-size:13px;
-  margin-bottom:12px
-}
-
-.ai-messages{
-  height:240px;
-  overflow:auto;
-  background:#090909;
-  border:1px solid #222;
-  border-radius:10px;
-  padding:10px;
-  margin-bottom:10px
-}
-
-.ai-msg{
-  padding:9px 11px;
-  border-radius:9px;
-  margin-bottom:7px;
-  font-size:13px
-}
-
-.ai-msg.user{
-  background:#351014;
-  margin-left:20px
-}
-
-.ai-msg.bot{
-  background:#191919;
-  margin-right:20px;
-  color:#ccc
-}
-
-.ai-input{
-  display:flex;
-  gap:7px
-}
-
-.ai-input input{
-  min-width:0;
   flex:1;
-  background:#090909;
-  border:1px solid #333;
-  color:#fff;
-  border-radius:9px;
-  padding:10px
 }
-
-.ai-input button{
-  background:#e50914;
+.share{
+  background:#292929;
   color:#fff;
-  border:0;
-  border-radius:9px;
-  padding:10px 13px
 }
-
-/* TOAST */
-
-.toast{
+.favorite{
+  background:#292929;
+  color:#fff;
+}
+.empty{
+  grid-column:1/-1;
+  text-align:center;
+  padding:60px 20px;
+  color:#888;
+}
+.modal{
+  display:none;
   position:fixed;
-  right:20px;
-  bottom:95px;
-  background:#171717;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  z-index:100;
+  padding:20px;
+  overflow:auto;
+}
+.modal.active{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.modal-box{
+  width:min(900px,100%);
+  background:#111;
   border:1px solid #333;
-  padding:12px 15px;
-  border-radius:10px;
-  transform:translateY(120px);
-  transition:.25s;
-  z-index:600
+  border-radius:16px;
+  overflow:hidden;
 }
-
-.toast.show{
-  transform:translateY(0)
+.modal-img{
+  width:100%;
+  max-height:480px;
+  object-fit:cover;
 }
-
-/* MOBILE */
-
-@media(max-width:950px){
-
-.stats{
-  grid-template-columns:repeat(2,1fr)
+.modal-content{padding:25px}
+.close{
+  float:right;
+  background:#333;
+  color:#fff;
 }
-
-.grid{
-  grid-template-columns:repeat(2,1fr)
+.whatsapp{
+  display:block;
+  text-align:center;
+  background:#159447;
+  color:#fff;
+  padding:14px;
+  border-radius:8px;
+  text-decoration:none;
+  margin-top:20px;
+  font-weight:bold;
 }
-
-.filters{
-  grid-template-columns:1fr 1fr
+footer{
+  margin-top:70px;
+  padding:30px;
+  text-align:center;
+  color:#666;
+  border-top:1px solid #222;
 }
-
-.filters input{
-  grid-column:1/-1
+@media(max-width:850px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .filters{grid-template-columns:1fr}
 }
-
-}
-
-@media(max-width:650px){
-
-.navlinks a{
-  display:none
-}
-
-.hero{
-  min-height:470px
-}
-
-.stats{
-  margin-top:-20px
-}
-
-.grid{
-  grid-template-columns:1fr
-}
-
-.filters{
-  grid-template-columns:1fr
-}
-
-.filters input{
-  grid-column:auto
-}
-
-.contact-box{
-  flex-direction:column;
-  align-items:flex-start
-}
-
-.modal-image{
-  height:270px
-}
-
-.section{
-  padding:55px 0
-}
-
+@media(max-width:550px){
+  .grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
+  .nav{flex-direction:column}
 }
 </style>
 </head>
@@ -680,1487 +249,522 @@ footer{
 <body>
 
 <header>
-
-<div class="container navbar">
-
-<a class="logo" href="#">
-MALESPINA <span>PRO</span>
-</a>
-
-<nav class="navlinks">
-<a href="#inicio">Inicio</a>
-<a href="#catalogo">Vehículos</a>
-<a href="#contacto">Contacto</a>
-
-<button class="nav-btn" onclick="abrirAI()">
-🤖 Asistente IA
-</button>
-</nav>
-
-</div>
-
+  <div class="nav">
+    <div class="logo">MALESPINA <span>AUTOMOTORES PRO</span></div>
+    <a class="admin" href="admin.html">ADMIN PRO</a>
+  </div>
 </header>
 
-
-<main id="inicio">
-
 <section class="hero">
-
-<div class="container">
-
-<div class="hero-content">
-
-<div class="pro-label">
-MALESPINA AUTOMOTORES · PRO
-</div>
-
-<h1>
-Encontrá tu próximo
-<span>vehículo.</span>
-</h1>
-
-<p>
-Catálogo actualizado, atención personalizada y herramientas inteligentes
-para ayudarte a encontrar el vehículo indicado.
-</p>
-
-<div class="hero-buttons">
-
-<a href="#catalogo" class="btn red">
-VER VEHÍCULOS
-</a>
-
-<button class="btn" onclick="abrirAI()">
-🤖 Consultar IA
-</button>
-
-</div>
-
-</div>
-
-</div>
-
+  <h1>Encontrá tu próximo <span>vehículo</span></h1>
+  <p>MALESPINA Automotores · Catálogo PRO</p>
 </section>
 
-
-<section class="container">
-
-<div class="stats">
-
-<div class="stat">
-<small>Vehículos</small>
-<strong id="statVehiculos">0</strong>
-</div>
-
-<div class="stat">
-<small>Disponibles</small>
-<strong id="statDisponibles">0</strong>
-</div>
-
-<div class="stat">
-<small>Destacados</small>
-<strong id="statDestacados">0</strong>
-</div>
-
-<div class="stat">
-<small>Atención</small>
-<strong>WhatsApp</strong>
-</div>
-
-</div>
-
+<section class="stats">
+  <div class="stat">
+    <strong id="total">0</strong>
+    <span>Vehículos</span>
+  </div>
+  <div class="stat">
+    <strong id="destacados">0</strong>
+    <span>Destacados</span>
+  </div>
+  <div class="stat">
+    <strong id="ofertas">0</strong>
+    <span>Ofertas</span>
+  </div>
 </section>
 
+<main class="container">
 
-<section id="catalogo" class="section">
+  <div class="filters">
+    <input
+      id="busqueda"
+      type="text"
+      placeholder="Buscar marca, modelo..."
+    >
 
-<div class="container">
+    <select id="marca">
+      <option value="">Todas las marcas</option>
+    </select>
 
-<div class="section-title">
+    <select id="orden">
+      <option value="nuevo">Más nuevos</option>
+      <option value="precioMenor">Precio menor</option>
+      <option value="precioMayor">Precio mayor</option>
+    </select>
+  </div>
 
-<h2>Vehículos disponibles</h2>
+  <div id="estado">Cargando vehículos...</div>
 
-<p>
-Elegí, compará y consultá directamente.
-</p>
-
-</div>
-
-
-<div class="filters">
-
-<input
-id="busqueda"
-placeholder="🔎 Buscar marca, modelo..."
-oninput="aplicarFiltros()"
->
-
-<select id="filtroMarca" onchange="aplicarFiltros()">
-<option value="">Todas las marcas</option>
-</select>
-
-<select id="filtroCombustible" onchange="aplicarFiltros()">
-<option value="">Combustible</option>
-</select>
-
-<select id="filtroTransmision" onchange="aplicarFiltros()">
-<option value="">Transmisión</option>
-</select>
-
-<select id="orden" onchange="aplicarFiltros()">
-<option value="">Ordenar</option>
-<option value="precioAsc">Precio menor</option>
-<option value="precioDesc">Precio mayor</option>
-<option value="anioDesc">Más nuevos</option>
-</select>
-
-</div>
-
-
-<div class="results" id="contadorResultados">
-Cargando vehículos...
-</div>
-
-
-<div id="listaAutos" class="grid">
-
-<div class="loading">
-Cargando vehículos...
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section id="contacto" class="section contact">
-
-<div class="container">
-
-<div class="contact-box">
-
-<div>
-
-<h2>¿Encontraste el vehículo?</h2>
-
-<p>
-Contactanos directamente por WhatsApp.
-</p>
-
-</div>
-
-<a
-id="contactWhatsapp"
-class="btn red"
-target="_blank"
->
-📱 Hablar por WhatsApp
-</a>
-
-</div>
-
-</div>
-
-</section>
+  <div id="listaAutos" class="grid"></div>
 
 </main>
 
+<div id="modal" class="modal">
+  <div class="modal-box">
+    <img id="modalImg" class="modal-img" src="" alt="">
+    <div class="modal-content">
+      <button class="close" onclick="cerrarModal()">Cerrar</button>
+      <h2 id="modalTitulo"></h2>
+      <p id="modalInfo" class="info"></p>
+      <div id="modalPrecio" class="price"></div>
+      <p id="modalDescripcion" class="info"></p>
+
+      <a
+        id="modalWhatsapp"
+        class="whatsapp"
+        target="_blank"
+        href="#"
+      >
+        Consultar por WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
 
 <footer>
-
-<div class="container">
-
-© <span id="year"></span> MALESPINA Automotores · PRO
-
-</div>
-
+  MALESPINA Automotores · Salta
 </footer>
 
-
-<!-- MODAL VEHÍCULO -->
-
-<div id="vehicleModal" class="modal">
-
-<div class="modal-box">
-
-<button class="close" onclick="cerrarVehiculo()">
-✕
-</button>
-
-<div class="modal-image">
-
-<img id="modalImage" src="" alt="Vehículo">
-
-</div>
-
-<div id="modalGallery" class="gallery"></div>
-
-<div class="modal-content">
-
-<h2 id="modalTitle"></h2>
-
-<div id="modalMeta" class="car-meta"></div>
-
-<div id="modalPrice" class="price"></div>
-
-<div id="modalDescription" class="modal-description"></div>
-
-<div class="modal-actions">
-
-<button
-class="btn red"
-id="modalWhatsapp"
->
-📱 WhatsApp
-</button>
-
-<button
-class="btn"
-id="modalShare"
->
-🔗 Compartir
-</button>
-
-<button
-class="btn"
-id="modalFavorite"
->
-❤️ Favorito
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- AI -->
-
-<button class="ai-button" onclick="abrirAI()">
-🤖
-</button>
-
-<div id="aiPanel" class="ai-panel">
-
-<h3>🤖 Asistente MALESPINA</h3>
-
-<p>
-Decime qué vehículo estás buscando y te ayudo a encontrar opciones.
-</p>
-
-<div id="aiMessages" class="ai-messages">
-
-<div class="ai-msg bot">
-¡Hola! 👋 Soy el asistente de MALESPINA. ¿Qué vehículo estás buscando?
-</div>
-
-</div>
-
-<div class="ai-input">
-
-<input
-id="aiInput"
-placeholder="Ej: busco una camioneta..."
-onkeydown="if(event.key==='Enter')enviarAI()"
->
-
-<button onclick="enviarAI()">
-Enviar
-</button>
-
-</div>
-
-</div>
-
-
-<div id="toast" class="toast"></div>
-
-
 <script>
-/* ==========================================
-CONFIGURACIÓN PRO
-========================================== */
-
 const SUPABASE_URL =
 "https://mbrcbeqbtllajgcqujxv.supabase.co";
 
 const SUPABASE_KEY =
 "sb_publishable_-j0aKO6FadT11STSQ7w0jg_1YP-dtTS";
 
-const WHATSAPP =
-"543878636763";
+/* IMPORTANTE:
+   PRO usa EXCLUSIVAMENTE esta tabla */
+const TABLA = "vehiculos_pro";
 
-const INSTAGRAM =
-"https://instagram.com/Sergiomalespina24";
+const WHATSAPP = "543878636763";
 
-const AI_ENDPOINT =
-`${SUPABASE_URL}/functions/v1/ia-asistente`;
-
-
-/*
-IMPORTANTE:
-
-PRO usa EXCLUSIVAMENTE:
-
-vehiculos_pro
-
-STANDARD NO SE TOCA.
-*/
-
-const VEHICLE_TABLE =
-"vehiculos_pro";
-
-
-const db =
-supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
-
-
-let autos=[];
-let autosFiltrados=[];
-let vehiculoActual=null;
-
-const FAVORITES_KEY =
-"malespina_favoritos";
-
-
-/* ==========================================
-UTILIDADES
-========================================== */
-
-function esc(value){
-
-return String(value ?? "")
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
-
-}
-
-
-function money(value){
-
-if(value===null||value===undefined||value==="")
-return "Consultar";
-
-return "$ "+
-Number(value).toLocaleString("es-AR");
-
-}
-
-
-function toast(text){
-
-const el=document.getElementById("toast");
-
-el.textContent=text;
-
-el.classList.add("show");
-
-setTimeout(()=>{
-el.classList.remove("show");
-},2800);
-
-}
-
-
-/* ==========================================
-ANALYTICS
-========================================== */
-
-async function registrarEvento(tipo,vehiculoId=null){
-
-try{
-
-await fetch(
-`${SUPABASE_URL}/rest/v1/analytics_eventos`,
-{
-method:"POST",
-
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":`Bearer ${SUPABASE_KEY}`,
-"Content-Type":"application/json",
-"Prefer":"return=minimal"
-},
-
-body:JSON.stringify({
-
-tipo:tipo,
-
-vehiculo_id:
-vehiculoId===null
-?null
-:Number(vehiculoId)
-
-})
-
-}
-);
-
-}catch(error){
-
-console.warn(
-"Analytics no disponible",
-error
-);
-
-}
-
-}
-
-
-/* ==========================================
-CARGAR VEHÍCULOS
-========================================== */
+let vehiculos = [];
+let filtrados = [];
 
 async function cargarVehiculos(){
 
-const lista=
-document.getElementById("listaAutos");
+  const estado = document.getElementById("estado");
 
-try{
+  estado.textContent = "Cargando vehículos...";
 
-lista.innerHTML=`
-<div class="loading">
-Cargando vehículos...
-</div>
-`;
+  try{
 
+    const url =
+      SUPABASE_URL +
+      "/rest/v1/" +
+      TABLA +
+      "?select=*&order=id.desc";
 
-/*
-ESTA ES LA PARTE CLAVE:
+    const respuesta = await fetch(url,{
+      method:"GET",
+      headers:{
+        "apikey":SUPABASE_KEY,
+        "Authorization":"Bearer " + SUPABASE_KEY,
+        "Content-Type":"application/json"
+      }
+    });
 
-PRO → vehiculos_pro
-*/
+    const texto = await respuesta.text();
 
-const respuesta=
-await fetch(
-`${SUPABASE_URL}/rest/v1/${VEHICLE_TABLE}?select=*&order=id.desc`,
-{
-method:"GET",
+    if(!respuesta.ok){
+      throw new Error(texto);
+    }
 
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":`Bearer ${SUPABASE_KEY}`
+    vehiculos = JSON.parse(texto);
+
+    filtrados = [...vehiculos];
+
+    actualizarEstadisticas();
+    cargarMarcas();
+    mostrarVehiculos();
+
+  }catch(error){
+
+    console.error("ERROR PRO:",error);
+
+    estado.innerHTML = `
+      <div style="color:#e00000;font-weight:bold">
+        No se pudieron cargar los vehículos.
+      </div>
+      <div style="margin-top:10px;font-size:13px;color:#777">
+        Error de conexión con vehiculos_pro.
+      </div>
+    `;
+  }
 }
 
-}
-);
+function actualizarEstadisticas(){
 
+  document.getElementById("total").textContent =
+    vehiculos.filter(v => !v.vendido).length;
 
-if(!respuesta.ok){
+  document.getElementById("destacados").textContent =
+    vehiculos.filter(v => v.destacado && !v.vendido).length;
 
-const error=
-await respuesta.text();
-
-throw new Error(error);
-
-}
-
-
-autos=
-await respuesta.json();
-
-
-if(!Array.isArray(autos))
-autos=[];
-
-
-document.getElementById("statVehiculos")
-.textContent=autos.length;
-
-
-document.getElementById("statDisponibles")
-.textContent=
-autos.filter(v=>!v.vendido).length;
-
-
-document.getElementById("statDestacados")
-.textContent=
-autos.filter(v=>v.destacado).length;
-
-
-cargarFiltros();
-
-aplicarFiltros();
-
-actualizarFavoritos();
-
-
-}catch(error){
-
-console.error(error);
-
-lista.innerHTML=`
-
-<div class="no-results">
-
-<strong>
-No se pudieron cargar los vehículos
-</strong>
-
-<p style="margin-top:8px">
-Error conectando con el inventario PRO.
-</p>
-
-</div>
-
-`;
-
-document.getElementById(
-"contadorResultados"
-).textContent=
-"Error de conexión";
-
+  document.getElementById("ofertas").textContent =
+    vehiculos.filter(v => v.oferta && !v.vendido).length;
 }
 
+function cargarMarcas(){
+
+  const select = document.getElementById("marca");
+
+  const marcas = [
+    ...new Set(
+      vehiculos
+        .map(v => v.marca)
+        .filter(Boolean)
+    )
+  ].sort();
+
+  select.innerHTML =
+    `<option value="">Todas las marcas</option>`;
+
+  marcas.forEach(marca => {
+
+    const option = document.createElement("option");
+
+    option.value = marca;
+    option.textContent = marca;
+
+    select.appendChild(option);
+  });
 }
-
-
-/* ==========================================
-FILTROS
-========================================== */
-
-function cargarFiltros(){
-
-const marcas=
-[...new Set(
-autos
-.map(v=>v.marca)
-.filter(Boolean)
-)]
-.sort();
-
-const combustibles=
-[...new Set(
-autos
-.map(v=>v.combustible)
-.filter(Boolean)
-)]
-.sort();
-
-const transmisiones=
-[...new Set(
-autos
-.map(v=>v.transmision)
-.filter(Boolean)
-)]
-.sort();
-
-
-const marca=
-document.getElementById("filtroMarca");
-
-marca.innerHTML=
-`<option value="">Todas las marcas</option>`+
-marcas.map(x=>
-`<option value="${esc(x)}">${esc(x)}</option>`
-).join("");
-
-
-const combustible=
-document.getElementById("filtroCombustible");
-
-combustible.innerHTML=
-`<option value="">Combustible</option>`+
-combustibles.map(x=>
-`<option value="${esc(x)}">${esc(x)}</option>`
-).join("");
-
-
-const transmision=
-document.getElementById("filtroTransmision");
-
-transmision.innerHTML=
-`<option value="">Transmisión</option>`+
-transmisiones.map(x=>
-`<option value="${esc(x)}">${esc(x)}</option>`
-).join("");
-
-}
-
 
 function aplicarFiltros(){
 
-const texto=
-document
-.getElementById("busqueda")
-.value
-.toLowerCase()
-.trim();
+  const texto =
+    document
+      .getElementById("busqueda")
+      .value
+      .toLowerCase()
+      .trim();
 
-const marca=
-document.getElementById("filtroMarca").value;
+  const marca =
+    document.getElementById("marca").value;
 
-const combustible=
-document.getElementById("filtroCombustible").value;
+  const orden =
+    document.getElementById("orden").value;
 
-const transmision=
-document.getElementById("filtroTransmision").value;
+  filtrados = vehiculos.filter(v => {
 
-const orden=
-document.getElementById("orden").value;
+    if(v.vendido) return false;
 
+    const contenido = `
+      ${v.marca || ""}
+      ${v.modelo || ""}
+      ${v.descripcion || ""}
+    `.toLowerCase();
 
-autosFiltrados=
-autos.filter(v=>{
+    const coincideTexto =
+      !texto || contenido.includes(texto);
 
-const contenido=
-`${v.marca||""} ${v.modelo||""} ${v.descripcion||""}`
-.toLowerCase();
+    const coincideMarca =
+      !marca || v.marca === marca;
 
-if(
-texto &&
-!contenido.includes(texto)
-)
-return false;
+    return coincideTexto && coincideMarca;
+  });
 
-if(
-marca &&
-v.marca!==marca
-)
-return false;
+  if(orden === "precioMenor"){
+    filtrados.sort((a,b)=>
+      Number(a.precio || 0) -
+      Number(b.precio || 0)
+    );
+  }
 
-if(
-combustible &&
-v.combustible!==combustible
-)
-return false;
+  if(orden === "precioMayor"){
+    filtrados.sort((a,b)=>
+      Number(b.precio || 0) -
+      Number(a.precio || 0)
+    );
+  }
 
-if(
-transmision &&
-v.transmision!==transmision
-)
-return false;
-
-return true;
-
-});
-
-
-if(orden==="precioAsc"){
-
-autosFiltrados.sort(
-(a,b)=>
-Number(a.precio||0)-
-Number(b.precio||0)
-);
-
+  mostrarVehiculos();
 }
 
-if(orden==="precioDesc"){
+function mostrarVehiculos(){
 
-autosFiltrados.sort(
-(a,b)=>
-Number(b.precio||0)-
-Number(a.precio||0)
-);
+  const contenedor =
+    document.getElementById("listaAutos");
 
+  const estado =
+    document.getElementById("estado");
+
+  estado.textContent = "";
+
+  contenedor.innerHTML = "";
+
+  if(!filtrados.length){
+
+    contenedor.innerHTML = `
+      <div class="empty">
+        <h2>No hay vehículos disponibles</h2>
+        <p>Probá cambiando los filtros.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+  filtrados.forEach(auto => {
+
+    const imagen = obtenerImagen(auto);
+
+    const precio =
+      auto.precio
+      ? "$ " + Number(auto.precio).toLocaleString("es-AR")
+      : "Consultar";
+
+    const destacado =
+      auto.destacado
+      ? `<div class="badge">DESTACADO</div>`
+      : "";
+
+    const card = document.createElement("article");
+
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="card-img">
+        <img
+          src="${imagen}"
+          alt="${esc(auto.marca)} ${esc(auto.modelo)}"
+          onerror="this.src='https://via.placeholder.com/800x500?text=MALESPINA+AUTOMOTORES'"
+        >
+        ${destacado}
+      </div>
+
+      <div class="card-body">
+
+        <h2>
+          ${esc(auto.marca || "")}
+          ${esc(auto.modelo || "")}
+        </h2>
+
+        <div class="info">
+          ${auto.anio || "Año no informado"}
+          ·
+          ${auto.kilometros
+            ? Number(auto.kilometros).toLocaleString("es-AR") + " km"
+            : "Km no informado"}
+        </div>
+
+        <div class="price">${precio}</div>
+
+        <div class="buttons">
+
+          <button
+            class="view"
+            onclick="abrirVehiculo(${auto.id})"
+          >
+            Ver vehículo
+          </button>
+
+          <button
+            class="favorite"
+            onclick="favorito(${auto.id})"
+          >
+            ♥
+          </button>
+
+          <button
+            class="share"
+            onclick="compartir(${auto.id})"
+          >
+            ↗
+          </button>
+
+        </div>
+
+      </div>
+    `;
+
+    contenedor.appendChild(card);
+  });
 }
 
-if(orden==="anioDesc"){
+function obtenerImagen(auto){
 
-autosFiltrados.sort(
-(a,b)=>
-Number(b.anio||0)-
-Number(a.anio||0)
-);
+  if(auto.imagen){
+    return auto.imagen;
+  }
 
+  if(
+    Array.isArray(auto.imagenes) &&
+    auto.imagenes.length
+  ){
+    return auto.imagenes[0];
+  }
+
+  return "https://via.placeholder.com/800x500?text=MALESPINA+AUTOMOTORES";
 }
-
-
-document.getElementById(
-"contadorResultados"
-).textContent=
-`${autosFiltrados.length} vehículo(s) encontrado(s)`;
-
-
-mostrarAutos();
-
-if(texto){
-
-registrarEvento("busqueda",null);
-
-}
-
-}
-
-
-/* ==========================================
-FAVORITOS
-========================================== */
-
-function getFavorites(){
-
-try{
-
-return JSON.parse(
-localStorage.getItem(FAVORITES_KEY)
-)||[];
-
-}catch{
-
-return [];
-
-}
-
-}
-
-
-function saveFavorites(list){
-
-localStorage.setItem(
-FAVORITES_KEY,
-JSON.stringify(list)
-);
-
-}
-
-
-function esFavorito(id){
-
-return getFavorites()
-.map(Number)
-.includes(Number(id));
-
-}
-
-
-function toggleFavorito(id){
-
-let favoritos=getFavorites();
-
-const existe=
-favoritos.map(Number)
-.includes(Number(id));
-
-
-if(existe){
-
-favoritos=
-favoritos.filter(
-x=>Number(x)!==Number(id)
-);
-
-toast("Quitado de favoritos");
-
-}else{
-
-favoritos.push(Number(id));
-
-toast("Agregado a favoritos");
-
-registrarEvento(
-"favorito",
-id
-);
-
-}
-
-saveFavorites(favoritos);
-
-actualizarFavoritos();
-
-mostrarAutos();
-
-}
-
-
-function actualizarFavoritos(){
-
-}
-
-
-/* ==========================================
-TARJETAS
-========================================== */
-
-function imagenesVehiculo(v){
-
-let lista=[];
-
-if(
-Array.isArray(v.imagenes)
-)
-lista=[
-...v.imagenes
-];
-
-if(
-v.imagen &&
-!lista.includes(v.imagen)
-)
-lista.unshift(v.imagen);
-
-return lista.filter(Boolean);
-
-}
-
-
-function mostrarAutos(){
-
-const lista=
-document.getElementById("listaAutos");
-
-
-if(!autosFiltrados.length){
-
-lista.innerHTML=`
-
-<div class="no-results">
-
-<h3>No encontramos vehículos</h3>
-
-<p style="margin-top:8px">
-Probá cambiar los filtros o la búsqueda.
-</p>
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-lista.innerHTML=
-autosFiltrados.map(v=>{
-
-const fotos=
-imagenesVehiculo(v);
-
-const img=
-fotos[0]||
-"";
-
-
-const fav=
-esFavorito(v.id);
-
-
-let badges="";
-
-if(v.destacado)
-badges+=
-`<span class="badge red">DESTACADO</span>`;
-
-if(v.oferta)
-badges+=
-`<span class="badge red">OFERTA</span>`;
-
-if(v.apto_credito)
-badges+=
-`<span class="badge green">CRÉDITO</span>`;
-
-if(v.financiado)
-badges+=
-`<span class="badge green">FINANCIACIÓN</span>`;
-
-if(v.consignacion)
-badges+=
-`<span class="badge">CONSIGNACIÓN</span>`;
-
-if(v.vendido)
-badges+=
-`<span class="badge red">VENDIDO</span>`;
-
-
-return `
-
-<article class="car">
-
-<div class="car-image">
-
-${
-img
-?
-`<img src="${esc(img)}"
-alt="${esc(v.marca)} ${esc(v.modelo)}"
-loading="lazy">`
-:
-""
-}
-
-<div class="badges">
-${badges}
-</div>
-
-<button
-class="favorite ${fav?"active":""}"
-onclick="toggleFavorito(${v.id})"
-aria-label="Favorito"
->
-♥
-</button>
-
-</div>
-
-
-<div class="car-body">
-
-<h3>
-${esc(v.marca)} ${esc(v.modelo)}
-</h3>
-
-<div class="car-meta">
-
-${v.anio||"—"}
-&nbsp;•&nbsp;
-${Number(v.kilometros||0).toLocaleString("es-AR")} km
-&nbsp;•&nbsp;
-${esc(v.combustible||"Consultar")}
-
-</div>
-
-<div class="price">
-${money(v.precio)}
-</div>
-
-<div class="car-actions">
-
-<button onclick="abrirVehiculo(${v.id})">
-Ver detalles
-</button>
-
-<button
-class="whatsapp"
-onclick="contactarWhatsApp(${v.id})"
->
-WhatsApp
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-`;
-
-}).join("");
-
-}
-
-
-/* ==========================================
-ABRIR VEHÍCULO
-========================================== */
 
 function abrirVehiculo(id){
 
-const v=
-autos.find(
-x=>Number(x.id)===Number(id)
-);
+  const auto =
+    vehiculos.find(v => Number(v.id) === Number(id));
 
-if(!v)return;
+  if(!auto) return;
 
-vehiculoActual=v;
+  document.getElementById("modalImg").src =
+    obtenerImagen(auto);
 
-const fotos=
-imagenesVehiculo(v);
+  document.getElementById("modalTitulo").textContent =
+    `${auto.marca || ""} ${auto.modelo || ""}`;
 
-const principal=
-fotos[0]||"";
+  document.getElementById("modalInfo").textContent =
+    `${auto.anio || ""} · ${
+      auto.kilometros
+      ? Number(auto.kilometros).toLocaleString("es-AR") + " km"
+      : "Km no informado"
+    }`;
 
+  document.getElementById("modalPrecio").textContent =
+    auto.precio
+    ? "$ " + Number(auto.precio).toLocaleString("es-AR")
+    : "Consultar precio";
 
-document.getElementById("modalImage")
-.src=principal;
+  document.getElementById("modalDescripcion").textContent =
+    auto.descripcion || "Consultanos para recibir más información.";
 
+  const mensaje =
+    encodeURIComponent(
+      `Hola! Quiero consultar por el ${auto.marca || ""} ${auto.modelo || ""} ${auto.anio || ""}.`
+    );
 
-document.getElementById("modalTitle")
-.textContent=
-`${v.marca||""} ${v.modelo||""}`;
+  document.getElementById("modalWhatsapp").href =
+    `https://wa.me/${WHATSAPP}?text=${mensaje}`;
 
+  document.getElementById("modal").classList.add("active");
 
-document.getElementById("modalMeta")
-.textContent=
-[
-v.anio,
-v.kilometros
-?
-Number(v.kilometros).toLocaleString("es-AR")+" km"
-:null,
-v.combustible,
-v.transmision
-]
-.filter(Boolean)
-.join(" • ");
-
-
-document.getElementById("modalPrice")
-.textContent=
-money(v.precio);
-
-
-document.getElementById("modalDescription")
-.textContent=
-v.descripcion||
-"Consultanos para obtener más información sobre este vehículo.";
-
-
-const gallery=
-document.getElementById("modalGallery");
-
-gallery.innerHTML=
-fotos.map((foto,i)=>`
-
-<img
-src="${esc(foto)}"
-class="${i===0?"active":""}"
-onclick="cambiarFoto(this,'${esc(foto)}')"
->
-
-`).join("");
-
-
-document.getElementById("modalWhatsapp")
-.onclick=
-()=>contactarWhatsApp(v.id);
-
-
-document.getElementById("modalShare")
-.onclick=
-()=>compartirVehiculo(v.id);
-
-
-document.getElementById("modalFavorite")
-.onclick=
-()=>toggleFavorito(v.id);
-
-
-document.getElementById("vehicleModal")
-.classList.add("show");
-
-
-const url=
-new URL(window.location.href);
-
-url.searchParams.set(
-"vehiculo",
-v.id
-);
-
-history.replaceState(
-{},
-"",
-url
-);
-
-
-registrarEvento(
-"visita",
-v.id
-);
-
+  registrarEvento("visita",auto.id);
 }
 
+function cerrarModal(){
+  document.getElementById("modal").classList.remove("active");
+}
 
-function cambiarFoto(element,url){
+function favorito(id){
 
-document.getElementById("modalImage")
-.src=url;
+  let favoritos =
+    JSON.parse(localStorage.getItem("malespina_favoritos") || "[]");
+
+  if(favoritos.includes(id)){
+    favoritos =
+      favoritos.filter(x => x !== id);
+  }else{
+    favoritos.push(id);
+    registrarEvento("favorito",id);
+  }
+
+  localStorage.setItem(
+    "malespina_favoritos",
+    JSON.stringify(favoritos)
+  );
+}
+
+async function compartir(id){
+
+  const auto =
+    vehiculos.find(v => Number(v.id) === Number(id));
+
+  if(!auto) return;
+
+  const url =
+    window.location.origin +
+    window.location.pathname +
+    "?vehiculo=" +
+    auto.id;
+
+  try{
+
+    if(navigator.share){
+
+      await navigator.share({
+        title:`${auto.marca} ${auto.modelo}`,
+        text:"Mirá este vehículo de MALESPINA Automotores",
+        url:url
+      });
+
+    }else{
+
+      await navigator.clipboard.writeText(url);
+
+      alert("Link copiado");
+
+    }
+
+    registrarEvento("compartido",id);
+
+  }catch(e){}
+}
+
+async function registrarEvento(tipo,vehiculoId){
+
+  try{
+
+    await fetch(
+      SUPABASE_URL +
+      "/rest/v1/analytics_eventos",
+      {
+        method:"POST",
+        headers:{
+          "apikey":SUPABASE_KEY,
+          "Authorization":"Bearer " + SUPABASE_KEY,
+          "Content-Type":"application/json",
+          "Prefer":"return=minimal"
+        },
+        body:JSON.stringify({
+          tipo:tipo,
+          vehiculo_id:vehiculoId
+        })
+      }
+    );
+
+  }catch(e){
+
+    console.log("Analytics:",e);
+
+  }
+}
+
+function esc(valor){
+
+  return String(valor)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
 
 document
-.querySelectorAll(".gallery img")
-.forEach(x=>
-x.classList.remove("active")
-);
-
-element.classList.add("active");
-
-}
-
-
-function cerrarVehiculo(){
-
-document.getElementById("vehicleModal")
-.classList.remove("show");
-
-const url=
-new URL(window.location.href);
-
-url.searchParams.delete("vehiculo");
-
-history.replaceState(
-{},
-"",
-url
-);
-
-}
-
-
-/* ==========================================
-WHATSAPP
-========================================== */
-
-function contactarWhatsApp(id){
-
-const v=
-autos.find(
-x=>Number(x.id)===Number(id)
-);
-
-if(!v)return;
-
-
-const texto=
-`Hola! Estoy interesado en el ${v.marca} ${v.modelo}${v.anio?` ${v.anio}`:""}. ¿Sigue disponible?`;
-
-
-registrarEvento(
-"whatsapp",
-id
-);
-
-
-window.open(
-`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(texto)}`,
-"_blank"
-);
-
-}
-
-
-/* ==========================================
-COMPARTIR
-========================================== */
-
-async function compartirVehiculo(id){
-
-const v=
-autos.find(
-x=>Number(x.id)===Number(id)
-);
-
-if(!v)return;
-
-
-const url=
-`${window.location.origin}${window.location.pathname}?vehiculo=${v.id}`;
-
-
-const titulo=
-`${v.marca} ${v.modelo}`;
-
-
-try{
-
-if(navigator.share){
-
-await navigator.share({
-title:titulo,
-text:`Mirá este vehículo de MALESPINA Automotores: ${titulo}`,
-url:url
-});
-
-}else{
-
-await navigator.clipboard.writeText(url);
-
-toast("Enlace copiado");
-
-}
-
-registrarEvento(
-"compartido",
-id
-);
-
-
-}catch(error){
-
-console.log(error);
-
-}
-
-}
-
-
-/* ==========================================
-AI
-========================================== */
-
-function abrirAI(){
-
-document.getElementById("aiPanel")
-.classList.toggle("show");
-
-document.getElementById("aiInput")
-.focus();
-
-}
-
-
-function agregarAIMensaje(text,user=false){
-
-const box=
-document.getElementById("aiMessages");
-
-const div=
-document.createElement("div");
-
-div.className=
-"ai-msg "+(user?"user":"bot");
-
-div.textContent=text;
-
-box.appendChild(div);
-
-box.scrollTop=box.scrollHeight;
-
-}
-
-
-async function enviarAI(){
-
-const input=
-document.getElementById("aiInput");
-
-const texto=
-input.value.trim();
-
-if(!texto)return;
-
-input.value="";
-
-agregarAIMensaje(
-texto,
-true
-);
-
-
-registrarEvento(
-"ia",
-null
-);
-
-
-/*
-Intentamos primero el backend real.
-Si todavía no existe la Edge Function,
-usamos el asistente local como respaldo.
-*/
-
-try{
-
-const response=
-await fetch(
-AI_ENDPOINT,
-{
-method:"POST",
-
-headers:{
-"Content-Type":"application/json",
-"apikey":SUPABASE_KEY,
-"Authorization":`Bearer ${SUPABASE_KEY}`
-},
-
-body:JSON.stringify({
-
-mensaje:texto,
-
-vehiculos:
-autos.map(auto=>({
-
-id:auto.id,
-marca:auto.marca,
-modelo:auto.modelo,
-anio:auto.anio,
-kilometros:auto.kilometros,
-precio:auto.precio,
-combustible:auto.combustible,
-transmision:auto.transmision,
-descripcion:auto.descripcion
-
-}))
-
-})
-
-}
-);
-
-
-if(response.ok){
-
-const data=
-await response.json();
-
-if(data?.respuesta){
-
-agregarAIMensaje(
-data.respuesta
-);
-
-return;
-
-}
-
-}
-
-}catch(error){
-
-console.warn(
-"IA backend no disponible",
-error
-);
-
-}
-
-
-/*
-RESPALDO LOCAL
-*/
-
-const palabras=
-texto
-.toLowerCase()
-.split(/\s+/);
-
-
-let resultados=
-autos.filter(v=>{
-
-const contenido=
-`${v.marca} ${v.modelo} ${v.combustible} ${v.transmision} ${v.descripcion}`
-.toLowerCase();
-
-return palabras.some(
-p=>p.length>2&&contenido.includes(p)
-);
-
-});
-
-
-if(!resultados.length){
-
-agregarAIMensaje(
-"No encontré una coincidencia exacta. Podés decirme, por ejemplo, qué marca, modelo, presupuesto o tipo de vehículo estás buscando."
-);
-
-return;
-
-}
-
-
-resultados=
-resultados.slice(0,3);
-
-
-const respuesta=
-"Encontré estas opciones: "+
-resultados
-.map(v=>
-`${v.marca} ${v.modelo}${v.anio?` ${v.anio}`:""} — ${money(v.precio)}`
-)
-.join(" | ")+
-". Si querés, abrí cualquiera para ver todos sus detalles.";
-
-
-agregarAIMensaje(
-respuesta
-);
-
-
-/* ==========================================
-URL VEHÍCULO
-========================================== */
-
-function abrirVehiculoDesdeURL(){
-
-const params=
-new URLSearchParams(
-window.location.search
-);
-
-const id=
-params.get("vehiculo");
-
-if(!id)return;
-
-const existe=
-autos.some(
-v=>Number(v.id)===Number(id)
-);
-
-if(existe){
-
-setTimeout(()=>{
-abrirVehiculo(Number(id));
-},400);
-
-}
-
-}
-
-
-/* ==========================================
-INICIO
-========================================== */
-
-document.getElementById("year")
-.textContent=
-new Date().getFullYear();
-
-
-document.getElementById("contactWhatsapp")
-.href=
-`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
-"Hola! Quiero consultar por un vehículo."
-)}`;
-
+  .getElementById("busqueda")
+  .addEventListener("input",aplicarFiltros);
 
 document
-.getElementById("contactWhatsapp")
-.addEventListener(
-"click",
-()=>registrarEvento("whatsapp",null)
-);
-
-
-/*
-Visita general de la página.
-*/
-
-registrarEvento(
-"visita",
-null
-);
-
-
-cargarVehiculos()
-.then(()=>{
-abrirVehiculoDesdeURL();
-});
-
-
-/* cerrar modal tocando afuera */
+  .getElementById("marca")
+  .addEventListener("change",aplicarFiltros);
 
 document
-.getElementById("vehicleModal")
-.addEventListener(
-"click",
-e=>{
+  .getElementById("orden")
+  .addEventListener("change",aplicarFiltros);
 
-if(
-e.target.id==="vehicleModal"
-)
-cerrarVehiculo();
+document
+  .getElementById("modal")
+  .addEventListener("click",function(e){
 
-}
-);
+    if(e.target === this){
+      cerrarModal();
+    }
+
+  });
+
+cargarVehiculos();
+
+registrarEvento("visita",null);
 
 </script>
 
