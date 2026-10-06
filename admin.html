@@ -1,0 +1,2147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Admin PRO | MALESPINA Automotores</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#070707;
+    color:#fff;
+}
+
+button,input,select,textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* LOGIN */
+
+.login{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:
+        radial-gradient(circle at top,#450000,#070707 55%);
+}
+
+.login-box{
+    width:100%;
+    max-width:430px;
+    background:#111;
+    border:1px solid #292929;
+    border-radius:24px;
+    padding:32px;
+    box-shadow:0 25px 80px rgba(0,0,0,.7);
+}
+
+.logo{
+    text-align:center;
+    font-size:29px;
+    font-weight:900;
+    margin-bottom:7px;
+}
+
+.logo span{
+    color:#e00000;
+}
+
+.login-sub{
+    text-align:center;
+    color:#888;
+    margin-bottom:28px;
+}
+
+.input-group{
+    margin-bottom:15px;
+}
+
+.input-group label{
+    display:block;
+    color:#bbb;
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+.input-group input{
+    width:100%;
+    padding:14px;
+    background:#181818;
+    border:1px solid #333;
+    border-radius:11px;
+    color:#fff;
+    outline:none;
+}
+
+.input-group input:focus{
+    border-color:#e00000;
+}
+
+.primary{
+    width:100%;
+    border:0;
+    padding:14px;
+    border-radius:11px;
+    background:#e00000;
+    color:#fff;
+    font-weight:800;
+}
+
+.primary:hover{
+    background:#ff1818;
+}
+
+.error{
+    display:none;
+    margin-top:14px;
+    padding:12px;
+    background:#350707;
+    border:1px solid #5d1111;
+    color:#ff7777;
+    border-radius:10px;
+}
+
+/* APP */
+
+.app{
+    display:none;
+    min-height:100vh;
+}
+
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(8,8,8,.96);
+    border-bottom:1px solid #242424;
+    backdrop-filter:blur(15px);
+}
+
+.topbar-inner{
+    max-width:1500px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.brand{
+    font-size:22px;
+    font-weight:900;
+}
+
+.brand span{
+    color:#e00000;
+}
+
+.top-buttons{
+    display:flex;
+    gap:8px;
+}
+
+.top-btn{
+    border:1px solid #333;
+    background:#151515;
+    color:#fff;
+    border-radius:9px;
+    padding:10px 13px;
+}
+
+.top-btn:hover{
+    border-color:#e00000;
+}
+
+/* LAYOUT */
+
+.layout{
+    max-width:1500px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:230px 1fr;
+    min-height:calc(100vh - 66px);
+}
+
+.sidebar{
+    border-right:1px solid #222;
+    padding:20px 13px;
+}
+
+.nav-btn{
+    width:100%;
+    text-align:left;
+    border:0;
+    background:transparent;
+    color:#999;
+    padding:13px;
+    border-radius:10px;
+    margin-bottom:5px;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+    background:#210606;
+    color:#fff;
+}
+
+.content{
+    padding:25px;
+    min-width:0;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.page-title{
+    font-size:31px;
+    font-weight:900;
+    margin-bottom:5px;
+}
+
+.page-description{
+    color:#888;
+    margin-bottom:25px;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:#111;
+    border:1px solid #262626;
+    border-radius:17px;
+    padding:20px;
+}
+
+.stat-label{
+    color:#888;
+    font-size:13px;
+    margin-bottom:11px;
+}
+
+.stat-value{
+    font-size:30px;
+    font-weight:900;
+}
+
+.red{
+    color:#ff2727;
+}
+
+/* PANELS */
+
+.grid2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.panel{
+    background:#111;
+    border:1px solid #262626;
+    border-radius:17px;
+    padding:20px;
+    margin-bottom:18px;
+}
+
+.panel h2{
+    font-size:19px;
+    margin-bottom:16px;
+}
+
+.panel-sub{
+    color:#777;
+    font-size:13px;
+    margin-top:-10px;
+    margin-bottom:17px;
+}
+
+/* EVENTS */
+
+.event{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 13px;
+    background:#181818;
+    border-radius:9px;
+    margin-bottom:8px;
+}
+
+.event-name{
+    color:#ccc;
+}
+
+.event-count{
+    color:#ff3030;
+    font-weight:900;
+}
+
+/* VEHICLES */
+
+.vehicle{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:14px 0;
+    border-bottom:1px solid #242424;
+}
+
+.vehicle:last-child{
+    border-bottom:0;
+}
+
+.vehicle-name{
+    font-weight:bold;
+}
+
+.vehicle-meta{
+    color:#777;
+    font-size:13px;
+    margin-top:4px;
+}
+
+.vehicle-actions{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.action{
+    border:1px solid #333;
+    background:#181818;
+    color:#fff;
+    padding:8px 10px;
+    border-radius:8px;
+    font-size:12px;
+}
+
+.action:hover{
+    border-color:#e00000;
+}
+
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+.field label{
+    display:block;
+    color:#aaa;
+    font-size:13px;
+    margin-bottom:6px;
+}
+
+.field input,
+.field select,
+.field textarea{
+    width:100%;
+    background:#181818;
+    border:1px solid #333;
+    color:#fff;
+    border-radius:10px;
+    padding:12px;
+    outline:none;
+}
+
+.field textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+    border-color:#e00000;
+}
+
+.checks{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.check{
+    background:#181818;
+    border:1px solid #2c2c2c;
+    padding:11px;
+    border-radius:9px;
+}
+
+.check label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#ccc;
+    font-size:13px;
+}
+
+.form-actions{
+    margin-top:18px;
+    display:flex;
+    gap:10px;
+}
+
+.save{
+    border:0;
+    background:#e00000;
+    color:#fff;
+    padding:13px 18px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.cancel{
+    border:1px solid #333;
+    background:#181818;
+    color:#fff;
+    padding:13px 18px;
+    border-radius:10px;
+}
+
+/* ACTIVITY */
+
+.activity{
+    max-height:430px;
+    overflow:auto;
+}
+
+.activity-row{
+    padding:12px 0;
+    border-bottom:1px solid #222;
+}
+
+.activity-row strong{
+    display:block;
+    margin-bottom:4px;
+}
+
+.activity-row span{
+    color:#777;
+    font-size:12px;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:100;
+    background:#151515;
+    border:1px solid #333;
+    padding:14px 17px;
+    border-radius:12px;
+    display:none;
+    box-shadow:0 15px 40px rgba(0,0,0,.5);
+}
+
+.loading,
+.empty{
+    color:#777;
+    padding:15px 0;
+}
+
+/* MOBILE */
+
+.mobile-menu{
+    display:none;
+}
+
+@media(max-width:1000px){
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:none;
+        border-right:0;
+        border-bottom:1px solid #222;
+    }
+
+    .sidebar.open{
+        display:block;
+    }
+
+    .mobile-menu{
+        display:block;
+        border:1px solid #333;
+        background:#151515;
+        color:#fff;
+        padding:9px 12px;
+        border-radius:8px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid2{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    .topbar-inner{
+        padding:12px;
+    }
+
+    .brand{
+        font-size:18px;
+    }
+
+    .top-buttons .top-btn:first-child{
+        display:none;
+    }
+
+    .content{
+        padding:16px;
+    }
+
+    .page-title{
+        font-size:25px;
+    }
+
+    .stats{
+        gap:9px;
+    }
+
+    .stat{
+        padding:15px;
+    }
+
+    .stat-value{
+        font-size:24px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .checks{
+        grid-template-columns:1fr;
+    }
+
+    .vehicle{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .vehicle-actions{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<section class="login" id="login">
+
+    <div class="login-box">
+
+        <div class="logo">
+            MALESPINA <span>PRO</span>
+        </div>
+
+        <div class="login-sub">
+            Centro de control del concesionario
+        </div>
+
+        <div class="input-group">
+            <label>Email</label>
+            <input id="email" type="email" placeholder="Email">
+        </div>
+
+        <div class="input-group">
+            <label>Contraseña</label>
+            <input id="password" type="password" placeholder="Contraseña">
+        </div>
+
+        <button class="primary" onclick="login()">
+            ENTRAR AL ADMIN PRO
+        </button>
+
+        <div class="error" id="loginError"></div>
+
+    </div>
+
+</section>
+
+
+<!-- APP -->
+
+<section class="app" id="app">
+
+<header class="topbar">
+
+    <div class="topbar-inner">
+
+        <button
+            class="mobile-menu"
+            onclick="toggleMenu()">
+            ☰
+        </button>
+
+        <div class="brand">
+            MALESPINA <span>PRO</span>
+        </div>
+
+        <div class="top-buttons">
+
+            <button
+                class="top-btn"
+                onclick="window.open('./index.html','_blank')">
+                Ver página
+            </button>
+
+            <button
+                class="top-btn"
+                onclick="logout()">
+                Salir
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <button
+            class="nav-btn active"
+            onclick="showPage('inicio',this)">
+            📊 Inicio
+        </button>
+
+        <button
+            class="nav-btn"
+            onclick="showPage('vehiculos',this)">
+            🚗 Vehículos
+        </button>
+
+        <button
+            class="nav-btn"
+            onclick="showPage('nuevo',this)">
+            ➕ Publicar vehículo
+        </button>
+
+        <button
+            class="nav-btn"
+            onclick="showPage('analytics',this)">
+            📈 Analytics
+        </button>
+
+        <button
+            class="nav-btn"
+            onclick="showPage('actividad',this)">
+            ⚡ Actividad
+        </button>
+
+        <button
+            class="nav-btn"
+            onclick="showPage('configuracion',this)">
+            ⚙️ Configuración
+        </button>
+
+    </aside>
+
+
+    <!-- CONTENT -->
+
+    <main class="content">
+
+
+        <!-- INICIO -->
+
+        <section
+            class="page active"
+            id="page-inicio">
+
+            <div class="page-title">
+                Centro de control
+            </div>
+
+            <div class="page-description">
+                Toda la actividad de MALESPINA Automotores PRO.
+            </div>
+
+
+            <div class="stats">
+
+                <div class="stat">
+                    <div class="stat-label">
+                        VISITAS
+                    </div>
+
+                    <div
+                        class="stat-value red"
+                        id="statVisitas">
+                        0
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">
+                        VEHÍCULOS
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="statVehiculos">
+                        0
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">
+                        WHATSAPP
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="statWhatsapp">
+                        0
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">
+                        FAVORITOS
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="statFavoritos">
+                        0
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="grid2">
+
+                <div class="panel">
+
+                    <h2>
+                        Interacciones
+                    </h2>
+
+                    <div id="resumenEventos">
+                        <div class="loading">
+                            Cargando...
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <h2>
+                        Última actividad
+                    </h2>
+
+                    <div
+                        class="activity"
+                        id="ultimosEventos">
+                        <div class="loading">
+                            Cargando...
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- VEHICULOS -->
+
+        <section
+            class="page"
+            id="page-vehiculos">
+
+            <div class="page-title">
+                Vehículos
+            </div>
+
+            <div class="page-description">
+                Administrá todo el inventario del concesionario.
+            </div>
+
+            <div class="panel">
+
+                <h2>
+                    Inventario actual
+                </h2>
+
+                <div id="listaVehiculos">
+                    <div class="loading">
+                        Cargando vehículos...
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NUEVO -->
+
+        <section
+            class="page"
+            id="page-nuevo">
+
+            <div class="page-title">
+                Publicar vehículo
+            </div>
+
+            <div class="page-description">
+                Agregá un vehículo al catálogo PRO.
+            </div>
+
+
+            <div class="panel">
+
+                <div class="form-grid">
+
+                    <div class="field">
+                        <label>Marca</label>
+                        <input id="marca" placeholder="Ej: Toyota">
+                    </div>
+
+                    <div class="field">
+                        <label>Modelo</label>
+                        <input id="modelo" placeholder="Ej: Corolla">
+                    </div>
+
+                    <div class="field">
+                        <label>Año</label>
+                        <input id="anio" type="number">
+                    </div>
+
+                    <div class="field">
+                        <label>Kilómetros</label>
+                        <input id="kilometros" type="number">
+                    </div>
+
+                    <div class="field">
+                        <label>Precio</label>
+                        <input id="precio" type="number">
+                    </div>
+
+                    <div class="field">
+
+                        <label>Combustible</label>
+
+                        <select id="combustible">
+
+                            <option value="">
+                                Seleccionar
+                            </option>
+
+                            <option>
+                                Nafta
+                            </option>
+
+                            <option>
+                                Diesel
+                            </option>
+
+                            <option>
+                                Híbrido
+                            </option>
+
+                            <option>
+                                Eléctrico
+                            </option>
+
+                            <option>
+                                GNC
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Transmisión</label>
+
+                        <select id="transmision">
+
+                            <option value="">
+                                Seleccionar
+                            </option>
+
+                            <option>
+                                Manual
+                            </option>
+
+                            <option>
+                                Automática
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Entrega</label>
+
+                        <input
+                            id="entrega"
+                            placeholder="Ej: Inmediata">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Cuotas</label>
+
+                        <input
+                            id="cuotas"
+                            placeholder="Ej: Hasta 24 cuotas">
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            URL de imagen principal
+                        </label>
+
+                        <input
+                            id="imagen"
+                            placeholder="https://...">
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            URLs de imágenes adicionales
+                        </label>
+
+                        <textarea
+                            id="imagenes"
+                            placeholder="Una URL por línea"></textarea>
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            Descripción
+                        </label>
+
+                        <textarea
+                            id="descripcion"
+                            placeholder="Descripción del vehículo"></textarea>
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <div class="checks">
+
+                            <div class="check">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="apto_credito">
+                                    Apto crédito
+                                </label>
+                            </div>
+
+                            <div class="check">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="financiado">
+                                    Financiación
+                                </label>
+                            </div>
+
+                            <div class="check">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="consignacion">
+                                    Consignación
+                                </label>
+                            </div>
+
+                            <div class="check">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="destacado">
+                                    ⭐ Destacado
+                                </label>
+                            </div>
+
+                            <div class="check">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="oferta">
+                                    🔥 Oferta
+                                </label>
+                            </div>
+
+                            <div class="check">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="vendido">
+                                    🚫 Vendido
+                                </label>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        class="save"
+                        onclick="guardarVehiculo()">
+                        PUBLICAR VEHÍCULO
+                    </button>
+
+                    <button
+                        class="cancel"
+                        onclick="limpiarFormulario()">
+                        Limpiar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ANALYTICS -->
+
+        <section
+            class="page"
+            id="page-analytics">
+
+            <div class="page-title">
+                Analytics
+            </div>
+
+            <div class="page-description">
+                Medí qué hacen los visitantes dentro de la página.
+            </div>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <div class="stat-label">
+                        VISITAS
+                    </div>
+                    <div
+                        class="stat-value red"
+                        id="aVisitas">
+                        0
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">
+                        APERTURAS
+                    </div>
+                    <div
+                        class="stat-value"
+                        id="aVehiculos">
+                        0
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">
+                        WHATSAPP
+                    </div>
+                    <div
+                        class="stat-value"
+                        id="aWhatsapp">
+                        0
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">
+                        COMPARTIDOS
+                    </div>
+                    <div
+                        class="stat-value"
+                        id="aCompartidos">
+                        0
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>
+                    Eventos registrados
+                </h2>
+
+                <div id="analyticsEventos">
+                    <div class="loading">
+                        Cargando analytics...
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ACTIVIDAD -->
+
+        <section
+            class="page"
+            id="page-actividad">
+
+            <div class="page-title">
+                Actividad
+            </div>
+
+            <div class="page-description">
+                Últimas interacciones registradas por la plataforma.
+            </div>
+
+            <div class="panel">
+
+                <div
+                    class="activity"
+                    id="actividadCompleta">
+                    <div class="loading">
+                        Cargando actividad...
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONFIGURACION -->
+
+        <section
+            class="page"
+            id="page-configuracion">
+
+            <div class="page-title">
+                Configuración
+            </div>
+
+            <div class="page-description">
+                Datos principales del concesionario.
+            </div>
+
+            <div class="panel">
+
+                <div class="form-grid">
+
+                    <div class="field">
+
+                        <label>
+                            WhatsApp
+                        </label>
+
+                        <input
+                            id="configWhatsapp"
+                            value="543878636763">
+
+                    </div>
+
+                    <div class="field">
+
+                        <label>
+                            Instagram
+                        </label>
+
+                        <input
+                            id="configInstagram"
+                            value="@Sergiomalespina24">
+
+                    </div>
+
+                    <div class="field full">
+
+                        <label>
+                            Nombre del concesionario
+                        </label>
+
+                        <input
+                            id="configNombre"
+                            value="MALESPINA Automotores">
+
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <button
+                        class="save"
+                        onclick="guardarConfiguracion()">
+                        GUARDAR CONFIGURACIÓN
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</section>
+
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+<script>
+
+/* ==============================
+   CONFIGURACIÓN
+============================== */
+
+const SUPABASE_URL =
+"https://mbrcbeqbtllajgcqujxv.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_-j0aKO6FadT11STSQ7w0jg_1YP-dtTS";
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* ==============================
+   LOGIN
+============================== */
+
+async function login(){
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const error =
+        document.getElementById("loginError");
+
+    error.style.display = "none";
+
+    try{
+
+        if(!email || !password){
+
+            throw new Error(
+                "Completá email y contraseña."
+            );
+
+        }
+
+        const {data,error:loginError} =
+            await supabaseClient.auth.signInWithPassword({
+                email,
+                password
+            });
+
+        if(loginError){
+            throw loginError;
+        }
+
+        if(!data.session){
+            throw new Error(
+                "No se pudo iniciar sesión."
+            );
+        }
+
+        mostrarApp();
+
+    }catch(e){
+
+        console.error(e);
+
+        error.textContent =
+            e.message ||
+            "No se pudo iniciar sesión.";
+
+        error.style.display = "block";
+
+    }
+
+}
+
+
+async function comprobarSesion(){
+
+    const {data} =
+        await supabaseClient.auth.getSession();
+
+    if(data.session){
+
+        mostrarApp();
+
+    }
+
+}
+
+
+function mostrarApp(){
+
+    document.getElementById("login").style.display =
+        "none";
+
+    document.getElementById("app").style.display =
+        "block";
+
+    cargarTodo();
+
+}
+
+
+async function logout(){
+
+    await supabaseClient.auth.signOut();
+
+    location.reload();
+
+}
+
+
+/* ==============================
+   NAVEGACIÓN
+============================== */
+
+function showPage(nombre,boton){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(p => p.classList.remove("active"));
+
+    document
+        .getElementById("page-"+nombre)
+        .classList.add("active");
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(b => b.classList.remove("active"));
+
+    boton.classList.add("active");
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+}
+
+
+function toggleMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
+
+
+/* ==============================
+   CARGA GENERAL
+============================== */
+
+async function cargarTodo(){
+
+    await cargarVehiculos();
+
+    await cargarAnalytics();
+
+}
+
+
+/* ==============================
+   VEHÍCULOS
+============================== */
+
+async function cargarVehiculos(){
+
+    const contenedor =
+        document.getElementById("listaVehiculos");
+
+    try{
+
+        const respuesta =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/vehiculos?select=*&order=id.desc`,
+                {
+                    headers:{
+                        apikey:SUPABASE_KEY,
+                        Authorization:
+                            `Bearer ${SUPABASE_KEY}`
+                    }
+                }
+            );
+
+        if(!respuesta.ok){
+
+            throw new Error(
+                await respuesta.text()
+            );
+
+        }
+
+        const autos =
+            await respuesta.json();
+
+        document.getElementById(
+            "statVehiculos"
+        ).textContent =
+            autos.length;
+
+
+        if(!autos.length){
+
+            contenedor.innerHTML =
+                `<div class="empty">
+                    No hay vehículos publicados.
+                </div>`;
+
+            return;
+
+        }
+
+
+        contenedor.innerHTML =
+            autos.map(auto => {
+
+                const nombre =
+                    `${auto.marca || ""} ${auto.modelo || ""}`.trim();
+
+                return `
+                    <div class="vehicle">
+
+                        <div>
+                            <div class="vehicle-name">
+                                ${escapeHTML(nombre)}
+                            </div>
+
+                            <div class="vehicle-meta">
+                                ${auto.anio || "-"}
+                                ·
+                                ${auto.kilometros || 0} km
+                                ·
+                                ${auto.precio || "Consultar"}
+                            </div>
+                        </div>
+
+                        <div class="vehicle-actions">
+
+                            <button
+                                class="action"
+                                onclick="verVehiculo(${auto.id})">
+                                Ver
+                            </button>
+
+                            <button
+                                class="action"
+                                onclick="editarVehiculo(${auto.id})">
+                                Editar
+                            </button>
+
+                            <button
+                                class="action"
+                                onclick="eliminarVehiculo(${auto.id})">
+                                Eliminar
+                            </button>
+
+                        </div>
+
+                    </div>
+                `;
+
+            }).join("");
+
+    }catch(e){
+
+        console.error(e);
+
+        contenedor.innerHTML =
+            `<div class="empty">
+                No se pudieron cargar los vehículos.
+            </div>`;
+
+    }
+
+}
+
+
+/* ==============================
+   GUARDAR VEHÍCULO
+============================== */
+
+async function guardarVehiculo(){
+
+    const auto = {
+
+        marca:valor("marca"),
+
+        modelo:valor("modelo"),
+
+        anio:numero("anio"),
+
+        kilometros:numero("kilometros"),
+
+        precio:numero("precio"),
+
+        combustible:valor("combustible"),
+
+        transmision:valor("transmision"),
+
+        imagen:valor("imagen"),
+
+        imagenes:
+            document
+            .getElementById("imagenes")
+            .value
+            .split("\n")
+            .map(x=>x.trim())
+            .filter(Boolean),
+
+        descripcion:valor("descripcion"),
+
+        apto_credito:
+            checked("apto_credito"),
+
+        financiado:
+            checked("financiado"),
+
+        consignacion:
+            checked("consignacion"),
+
+        entrega:
+            valor("entrega"),
+
+        cuotas:
+            valor("cuotas"),
+
+        destacado:
+            checked("destacado"),
+
+        oferta:
+            checked("oferta"),
+
+        vendido:
+            checked("vendido")
+
+    };
+
+
+    if(!auto.marca || !auto.modelo){
+
+        mostrarToast(
+            "Marca y modelo son obligatorios."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        const respuesta =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/vehiculos`,
+                {
+                    method:"POST",
+
+                    headers:{
+                        apikey:SUPABASE_KEY,
+                        Authorization:
+                            `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type":
+                            "application/json",
+                        Prefer:
+                            "return=minimal"
+                    },
+
+                    body:
+                        JSON.stringify(auto)
+                }
+            );
+
+
+        if(!respuesta.ok){
+
+            throw new Error(
+                await respuesta.text()
+            );
+
+        }
+
+
+        mostrarToast(
+            "🚗 Vehículo publicado correctamente."
+        );
+
+        limpiarFormulario();
+
+        await cargarVehiculos();
+
+    }catch(e){
+
+        console.error(e);
+
+        mostrarToast(
+            "No se pudo publicar el vehículo."
+        );
+
+    }
+
+}
+
+
+/* ==============================
+   ELIMINAR
+============================== */
+
+async function eliminarVehiculo(id){
+
+    if(!confirm(
+        "¿Seguro que querés eliminar este vehículo?"
+    )){
+        return;
+    }
+
+    try{
+
+        const respuesta =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/vehiculos?id=eq.${id}`,
+                {
+                    method:"DELETE",
+
+                    headers:{
+                        apikey:SUPABASE_KEY,
+                        Authorization:
+                            `Bearer ${SUPABASE_KEY}`
+                    }
+                }
+            );
+
+
+        if(!respuesta.ok){
+
+            throw new Error(
+                await respuesta.text()
+            );
+
+        }
+
+
+        mostrarToast(
+            "Vehículo eliminado."
+        );
+
+        await cargarVehiculos();
+
+    }catch(e){
+
+        console.error(e);
+
+        mostrarToast(
+            "No se pudo eliminar."
+        );
+
+    }
+
+}
+
+
+/* ==============================
+   VER
+============================== */
+
+function verVehiculo(id){
+
+    window.open(
+        `./index.html?vehiculo=${id}`,
+        "_blank"
+    );
+
+}
+
+
+/* ==============================
+   EDITAR
+============================== */
+
+function editarVehiculo(id){
+
+    mostrarToast(
+        "Editor avanzado: lo conectamos en el siguiente módulo."
+    );
+
+    showPage(
+        "nuevo",
+        document.querySelectorAll(".nav-btn")[2]
+    );
+
+}
+
+
+/* ==============================
+   ANALYTICS
+============================== */
+
+async function cargarAnalytics(){
+
+    try{
+
+        const respuesta =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/analytics_eventos?select=*&order=created_at.desc`,
+                {
+                    headers:{
+                        apikey:SUPABASE_KEY,
+                        Authorization:
+                            `Bearer ${SUPABASE_KEY}`
+                    }
+                }
+            );
+
+
+        if(!respuesta.ok){
+
+            throw new Error(
+                await respuesta.text()
+            );
+
+        }
+
+
+        const eventos =
+            await respuesta.json();
+
+
+        const conteos = {};
+
+        eventos.forEach(e => {
+
+            const tipo =
+                e.tipo || "otro";
+
+            conteos[tipo] =
+                (conteos[tipo] || 0) + 1;
+
+        });
+
+
+        document.getElementById(
+            "statVisitas"
+        ).textContent =
+            conteos.visita || 0;
+
+
+        document.getElementById(
+            "statWhatsapp"
+        ).textContent =
+            conteos.whatsapp || 0;
+
+
+        document.getElementById(
+            "statFavoritos"
+        ).textContent =
+            conteos.favorito || 0;
+
+
+        document.getElementById(
+            "aVisitas"
+        ).textContent =
+            conteos.visita || 0;
+
+
+        document.getElementById(
+            "aVehiculos"
+        ).textContent =
+            conteos.vehiculo || 0;
+
+
+        document.getElementById(
+            "aWhatsapp"
+        ).textContent =
+            conteos.whatsapp || 0;
+
+
+        document.getElementById(
+            "aCompartidos"
+        ).textContent =
+            conteos.compartir || 0;
+
+
+        const nombres = {
+
+            visita:"Visitas",
+
+            vehiculo:"Aperturas de vehículos",
+
+            whatsapp:"Clics a WhatsApp",
+
+            favorito:"Favoritos",
+
+            compartir:"Compartidos",
+
+            busqueda:"Búsquedas",
+
+            ia:"Consultas IA"
+
+        };
+
+
+        const resumen =
+            Object.entries(conteos)
+            .sort((a,b)=>b[1]-a[1])
+            .map(([tipo,cantidad]) => {
+
+                return `
+                    <div class="event">
+
+                        <span class="event-name">
+                            ${
+                                nombres[tipo]
+                                ||
+                                tipo
+                            }
+                        </span>
+
+                        <span class="event-count">
+                            ${cantidad}
+                        </span>
+
+                    </div>
+                `;
+
+            }).join("");
+
+
+        document.getElementById(
+            "resumenEventos"
+        ).innerHTML =
+            resumen ||
+            `<div class="empty">
+                Todavía no hay eventos.
+            </div>`;
+
+
+        document.getElementById(
+            "analyticsEventos"
+        ).innerHTML =
+            resumen ||
+            `<div class="empty">
+                Todavía no hay eventos.
+            </div>`;
+
+
+        const actividad =
+            document.getElementById(
+                "ultimosEventos"
+            );
+
+        const actividadCompleta =
+            document.getElementById(
+                "actividadCompleta"
+            );
+
+
+        const html =
+            eventos.slice(0,100)
+            .map(e => {
+
+                const fecha =
+                    e.created_at
+                    ? new Date(e.created_at)
+                        .toLocaleString("es-AR")
+                    : "";
+
+                return `
+                    <div class="activity-row">
+
+                        <strong>
+                            ${
+                                nombres[e.tipo]
+                                ||
+                                e.tipo
+                                ||
+                                "Actividad"
+                            }
+                        </strong>
+
+                        <span>
+                            ${
+                                e.vehiculo_id
+                                ? "Vehículo ID: "
+                                  + e.vehiculo_id
+                                : ""
+                            }
+                            ${fecha}
+                        </span>
+
+                    </div>
+                `;
+
+            }).join("");
+
+
+        actividad.innerHTML =
+            html ||
+            `<div class="empty">
+                Sin actividad todavía.
+            </div>`;
+
+
+        actividadCompleta.innerHTML =
+            html ||
+            `<div class="empty">
+                Sin actividad todavía.
+            </div>`;
+
+
+    }catch(e){
+
+        console.error(e);
+
+        mostrarToast(
+            "No se pudieron cargar los analytics."
+        );
+
+    }
+
+}
+
+
+/* ==============================
+   CONFIGURACIÓN
+============================== */
+
+function guardarConfiguracion(){
+
+    localStorage.setItem(
+        "malespina_config",
+        JSON.stringify({
+
+            whatsapp:
+                valor("configWhatsapp"),
+
+            instagram:
+                valor("configInstagram"),
+
+            nombre:
+                valor("configNombre")
+
+        })
+    );
+
+    mostrarToast(
+        "Configuración guardada."
+    );
+
+}
+
+
+/* ==============================
+   FORMULARIO
+============================== */
+
+function limpiarFormulario(){
+
+    document
+        .querySelectorAll(
+            "#page-nuevo input"
+        )
+        .forEach(input => {
+
+            if(input.type === "checkbox"){
+                input.checked = false;
+            }else{
+                input.value = "";
+            }
+
+        });
+
+    document
+        .querySelectorAll(
+            "#page-nuevo textarea"
+        )
+        .forEach(x => x.value = "");
+
+}
+
+
+function valor(id){
+
+    return document
+        .getElementById(id)
+        .value
+        .trim();
+
+}
+
+
+function numero(id){
+
+    const value =
+        document.getElementById(id).value;
+
+    return value
+        ? Number(value)
+        : null;
+
+}
+
+
+function checked(id){
+
+    return document
+        .getElementById(id)
+        .checked;
+
+}
+
+
+/* ==============================
+   UTILIDADES
+============================== */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function mostrarToast(texto){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent =
+        texto;
+
+    toast.style.display =
+        "block";
+
+    clearTimeout(
+        window.toastTimer
+    );
+
+    window.toastTimer =
+        setTimeout(() => {
+
+            toast.style.display =
+                "none";
+
+        },3500);
+
+}
+
+
+/* ==============================
+   INICIO
+============================== */
+
+comprobarSesion();
+
+</script>
+
+</body>
+</html>
