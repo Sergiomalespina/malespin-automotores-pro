@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard PRO | MALESPINA Automotores</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#080808;
+    color:#fff;
+    min-height:100vh;
+}
+
+button,input{
+    font:inherit;
+}
+
+.login-screen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:
+        radial-gradient(circle at top,#3b0000 0,#080808 45%);
+}
+
+.login-box{
+    width:100%;
+    max-width:430px;
+    background:#111;
+    border:1px solid #292929;
+    border-radius:22px;
+    padding:35px;
+    box-shadow:0 25px 80px rgba(0,0,0,.6);
+}
+
+.logo{
+    text-align:center;
+    font-size:30px;
+    font-weight:900;
+    margin-bottom:8px;
+}
+
+.logo span{
+    color:#e00000;
+}
+
+.subtitle{
+    text-align:center;
+    color:#999;
+    margin-bottom:30px;
+}
+
+.field{
+    margin-bottom:17px;
+}
+
+.field label{
+    display:block;
+    margin-bottom:7px;
+    color:#ccc;
+    font-size:14px;
+}
+
+.field input{
+    width:100%;
+    padding:14px;
+    border-radius:11px;
+    border:1px solid #333;
+    background:#181818;
+    color:#fff;
+    outline:none;
+}
+
+.field input:focus{
+    border-color:#e00000;
+}
+
+.btn{
+    width:100%;
+    border:0;
+    border-radius:11px;
+    padding:15px;
+    background:#e00000;
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#ff1717;
+}
+
+.error{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    border-radius:10px;
+    background:#3b0909;
+    color:#ff8585;
+    font-size:14px;
+}
+
+.dashboard{
+    display:none;
+}
+
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:rgba(8,8,8,.95);
+    border-bottom:1px solid #242424;
+    backdrop-filter:blur(12px);
+}
+
+.topbar-inner{
+    max-width:1400px;
+    margin:auto;
+    padding:16px 22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.brand{
+    font-size:22px;
+    font-weight:900;
+}
+
+.brand span{
+    color:#e00000;
+}
+
+.top-actions{
+    display:flex;
+    gap:10px;
+}
+
+.small-btn{
+    border:1px solid #333;
+    background:#151515;
+    color:#fff;
+    border-radius:9px;
+    padding:10px 14px;
+    cursor:pointer;
+}
+
+.small-btn:hover{
+    border-color:#e00000;
+}
+
+.main{
+    max-width:1400px;
+    margin:auto;
+    padding:30px 22px 60px;
+}
+
+.welcome{
+    margin-bottom:25px;
+}
+
+.welcome h1{
+    font-size:34px;
+    margin-bottom:7px;
+}
+
+.welcome p{
+    color:#888;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:#111;
+    border:1px solid #262626;
+    border-radius:18px;
+    padding:22px;
+}
+
+.card-title{
+    color:#888;
+    font-size:14px;
+    margin-bottom:12px;
+}
+
+.card-value{
+    font-size:32px;
+    font-weight:900;
+}
+
+.card-red{
+    color:#ff2525;
+}
+
+.sections{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.panel{
+    background:#111;
+    border:1px solid #262626;
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:20px;
+}
+
+.panel h2{
+    font-size:20px;
+    margin-bottom:18px;
+}
+
+.event-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.event{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:13px 15px;
+    background:#181818;
+    border-radius:10px;
+}
+
+.event-name{
+    color:#ccc;
+}
+
+.event-count{
+    font-weight:bold;
+    color:#ff2525;
+}
+
+.vehicle-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:14px 0;
+    border-bottom:1px solid #242424;
+}
+
+.vehicle-row:last-child{
+    border-bottom:0;
+}
+
+.vehicle-info strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.vehicle-info span{
+    color:#888;
+    font-size:13px;
+}
+
+.badge{
+    background:#280707;
+    color:#ff4444;
+    border:1px solid #4a0c0c;
+    border-radius:20px;
+    padding:7px 11px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.loading{
+    color:#888;
+    padding:20px 0;
+}
+
+.empty{
+    color:#777;
+    padding:15px 0;
+}
+
+.status{
+    margin-bottom:20px;
+    padding:12px 15px;
+    border-radius:10px;
+    background:#101f12;
+    color:#76e581;
+    border:1px solid #1e4823;
+    display:none;
+}
+
+@media(max-width:900px){
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .sections{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+    .topbar-inner{
+        align-items:flex-start;
+    }
+
+    .brand{
+        font-size:18px;
+    }
+
+    .welcome h1{
+        font-size:27px;
+    }
+
+    .cards{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .card{
+        padding:17px;
+    }
+
+    .card-value{
+        font-size:25px;
+    }
+
+    .top-actions{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<section class="login-screen" id="loginScreen">
+
+    <div class="login-box">
+
+        <div class="logo">
+            MALESPINA <span>PRO</span>
+        </div>
+
+        <div class="subtitle">
+            Panel privado de administración
+        </div>
+
+        <div class="field">
+            <label>Email</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="Tu email"
+                autocomplete="username"
+            >
+        </div>
+
+        <div class="field">
+            <label>Contraseña</label>
+            <input
+                type="password"
+                id="password"
+                placeholder="Tu contraseña"
+                autocomplete="current-password"
+            >
+        </div>
+
+        <button class="btn" onclick="iniciarSesion()">
+            INGRESAR AL DASHBOARD
+        </button>
+
+        <div class="error" id="loginError"></div>
+
+    </div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+
+<section class="dashboard" id="dashboard">
+
+    <header class="topbar">
+
+        <div class="topbar-inner">
+
+            <div class="brand">
+                MALESPINA <span>PRO</span>
+            </div>
+
+            <div class="top-actions">
+
+                <button
+                    class="small-btn"
+                    onclick="volverPagina()"
+                >
+                    Ver página
+                </button>
+
+                <button
+                    class="small-btn"
+                    onclick="cerrarSesion()"
+                >
+                    Cerrar sesión
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="main">
+
+        <div class="welcome">
+
+            <h1>Dashboard</h1>
+
+            <p>
+                Estadísticas y actividad de MALESPINA Automotores.
+            </p>
+
+        </div>
+
+
+        <div class="status" id="status">
+            Datos actualizados correctamente.
+        </div>
+
+
+        <!-- ESTADÍSTICAS PRINCIPALES -->
+
+        <section class="cards">
+
+            <div class="card">
+
+                <div class="card-title">
+                    Visitas
+                </div>
+
+                <div
+                    class="card-value card-red"
+                    id="totalVisitas"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Vehículos
+                </div>
+
+                <div
+                    class="card-value"
+                    id="totalVehiculos"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Consultas WhatsApp
+                </div>
+
+                <div
+                    class="card-value"
+                    id="totalWhatsapp"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Favoritos
+                </div>
+
+                <div
+                    class="card-value"
+                    id="totalFavoritos"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <div class="sections">
+
+            <!-- EVENTOS -->
+
+            <div class="panel">
+
+                <h2>
+                    Actividad de la página
+                </h2>
+
+                <div
+                    class="event-list"
+                    id="eventos"
+                >
+                    <div class="loading">
+                        Cargando estadísticas...
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- VEHÍCULOS -->
+
+            <div class="panel">
+
+                <h2>
+                    Rendimiento de vehículos
+                </h2>
+
+                <div
+                    id="vehiculos"
+                >
+                    <div class="loading">
+                        Cargando vehículos...
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- INFORMACIÓN -->
+
+        <div class="panel">
+
+            <h2>
+                Sistema PRO
+            </h2>
+
+            <p style="color:#888;line-height:1.7">
+                Este panel utiliza los eventos registrados por la
+                plataforma PRO. A medida que los visitantes interactúan
+                con la página, se pueden registrar visitas, aperturas
+                de vehículos, favoritos, compartidos y consultas.
+            </p>
+
+        </div>
+
+    </main>
+
+</section>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://mbrcbeqbtllajgcqujxv.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_-j0aKO6FadT11STSQ7w0jg_1YP-dtTS";
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* ================================
+   LOGIN
+================================ */
+
+async function iniciarSesion(){
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const error =
+        document.getElementById("loginError");
+
+    error.style.display = "none";
+
+    if(!email || !password){
+
+        error.textContent =
+            "Completá email y contraseña.";
+
+        error.style.display = "block";
+
+        return;
+    }
+
+    try{
+
+        const { data, error:loginError } =
+            await supabaseClient.auth.signInWithPassword({
+                email:email,
+                password:password
+            });
+
+        if(loginError){
+            throw loginError;
+        }
+
+        if(!data.session){
+
+            throw new Error(
+                "No se pudo iniciar la sesión."
+            );
+
+        }
+
+        mostrarDashboard();
+
+    }catch(err){
+
+        console.error(err);
+
+        error.textContent =
+            "Email o contraseña incorrectos.";
+
+        error.style.display = "block";
+
+    }
+
+}
+
+
+/* ================================
+   SESIÓN EXISTENTE
+================================ */
+
+async function verificarSesion(){
+
+    try{
+
+        const {
+            data
+        } =
+        await supabaseClient.auth.getSession();
+
+        if(data && data.session){
+
+            mostrarDashboard();
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* ================================
+   MOSTRAR DASHBOARD
+================================ */
+
+function mostrarDashboard(){
+
+    document.getElementById(
+        "loginScreen"
+    ).style.display = "none";
+
+    document.getElementById(
+        "dashboard"
+    ).style.display = "block";
+
+    cargarDashboard();
+
+}
+
+
+/* ================================
+   DASHBOARD
+================================ */
+
+async function cargarDashboard(){
+
+    await cargarVehiculos();
+
+    await cargarEventos();
+
+    mostrarStatus();
+
+}
+
+
+/* ================================
+   VEHÍCULOS
+================================ */
+
+async function cargarVehiculos(){
+
+    const contenedor =
+        document.getElementById("vehiculos");
+
+    try{
+
+        const respuesta =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/vehiculos?select=id,marca,modelo,anio,precio&order=id.desc`,
+                {
+                    headers:{
+                        "apikey":SUPABASE_KEY,
+                        "Authorization":
+                            `Bearer ${SUPABASE_KEY}`
+                    }
+                }
+            );
+
+        if(!respuesta.ok){
+
+            throw new Error(
+                await respuesta.text()
+            );
+
+        }
+
+        const autos =
+            await respuesta.json();
+
+        document.getElementById(
+            "totalVehiculos"
+        ).textContent = autos.length;
+
+
+        if(!autos.length){
+
+            contenedor.innerHTML =
+                `<div class="empty">
+                    No hay vehículos cargados.
+                </div>`;
+
+            return;
+
+        }
+
+
+        contenedor.innerHTML =
+            autos.map(auto => {
+
+                const nombre =
+                    `${auto.marca || ""} ${auto.modelo || ""}`.trim();
+
+                return `
+                    <div class="vehicle-row">
+
+                        <div class="vehicle-info">
+
+                            <strong>
+                                ${escapeHTML(nombre)}
+                            </strong>
+
+                            <span>
+                                ${auto.anio || "Año no informado"}
+                            </span>
+
+                        </div>
+
+                        <div class="badge">
+                            ID ${auto.id}
+                        </div>
+
+                    </div>
+                `;
+
+            }).join("");
+
+    }catch(error){
+
+        console.error(
+            "Error vehículos:",
+            error
+        );
+
+        contenedor.innerHTML =
+            `<div class="empty">
+                No se pudieron cargar los vehículos.
+            </div>`;
+
+    }
+
+}
+
+
+/* ================================
+   ANALYTICS
+================================ */
+
+async function cargarEventos(){
+
+    const contenedor =
+        document.getElementById("eventos");
+
+    try{
+
+        const respuesta =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/analytics_eventos?select=tipo,vehiculo_id,created_at&order=created_at.desc`,
+                {
+                    headers:{
+                        "apikey":SUPABASE_KEY,
+                        "Authorization":
+                            `Bearer ${SUPABASE_KEY}`
+                    }
+                }
+            );
+
+        if(!respuesta.ok){
+
+            throw new Error(
+                await respuesta.text()
+            );
+
+        }
+
+        const eventos =
+            await respuesta.json();
+
+
+        if(!Array.isArray(eventos)){
+
+            throw new Error(
+                "Respuesta inválida."
+            );
+
+        }
+
+
+        const conteos = {};
+
+        eventos.forEach(evento => {
+
+            const tipo =
+                evento.tipo || "otro";
+
+            if(!conteos[tipo]){
+                conteos[tipo] = 0;
+            }
+
+            conteos[tipo]++;
+
+        });
+
+
+        const total =
+            eventos.length;
+
+        document.getElementById(
+            "totalVisitas"
+        ).textContent =
+            conteos.visita || 0;
+
+
+        document.getElementById(
+            "totalWhatsapp"
+        ).textContent =
+            conteos.whatsapp || 0;
+
+
+        document.getElementById(
+            "totalFavoritos"
+        ).textContent =
+            conteos.favorito || 0;
+
+
+        const orden =
+            Object.entries(conteos)
+            .sort((a,b) => b[1] - a[1]);
+
+
+        if(!orden.length){
+
+            contenedor.innerHTML =
+                `<div class="empty">
+                    Todavía no hay actividad registrada.
+                </div>`;
+
+            return;
+
+        }
+
+
+        const nombres = {
+
+            visita:"Visitas",
+
+            vehiculo:"Aperturas de vehículos",
+
+            whatsapp:"Consultas WhatsApp",
+
+            favorito:"Favoritos",
+
+            compartir:"Compartidos",
+
+            busqueda:"Búsquedas",
+
+            ia:"Consultas a IA"
+
+        };
+
+
+        contenedor.innerHTML =
+            orden.map(([tipo,cantidad]) => {
+
+                return `
+                    <div class="event">
+
+                        <span class="event-name">
+                            ${
+                                nombres[tipo]
+                                ||
+                                tipo
+                            }
+                        </span>
+
+                        <span class="event-count">
+                            ${cantidad}
+                        </span>
+
+                    </div>
+                `;
+
+            }).join("");
+
+
+    }catch(error){
+
+        console.error(
+            "Error analytics:",
+            error
+        );
+
+        contenedor.innerHTML =
+            `<div class="empty">
+                No se pudieron cargar las estadísticas.
+            </div>`;
+
+    }
+
+}
+
+
+/* ================================
+   STATUS
+================================ */
+
+function mostrarStatus(){
+
+    const status =
+        document.getElementById("status");
+
+    status.style.display = "block";
+
+    setTimeout(() => {
+
+        status.style.display = "none";
+
+    },4000);
+
+}
+
+
+/* ================================
+   CERRAR SESIÓN
+================================ */
+
+async function cerrarSesion(){
+
+    await supabaseClient.auth.signOut();
+
+    document.getElementById(
+        "dashboard"
+    ).style.display = "none";
+
+    document.getElementById(
+        "loginScreen"
+    ).style.display = "flex";
+
+}
+
+
+/* ================================
+   VOLVER A LA PÁGINA
+================================ */
+
+function volverPagina(){
+
+    window.location.href =
+        "./index.html";
+
+}
+
+
+/* ================================
+   SEGURIDAD HTML
+================================ */
+
+function escapeHTML(valor){
+
+    return String(valor ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* ================================
+   INICIO
+================================ */
+
+verificarSesion();
+
+</script>
+
+</body>
+</html>
