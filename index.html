@@ -2,1738 +2,2144 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>MALESPINA Automotores PRO</title>
+<title>Admin PRO | MALESPINA Automotores</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html{
-  scroll-behavior:smooth;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:#070707;
-  color:#fff;
-  min-height:100vh;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#070707;
+    color:#fff;
 }
 
-button,
-input,
-select{
-  font-family:inherit;
+button,input,select,textarea{
+    font:inherit;
 }
 
 button{
-  cursor:pointer;
+    cursor:pointer;
 }
 
-header{
-  position:sticky;
-  top:0;
-  z-index:1000;
-  background:rgba(7,7,7,.96);
-  border-bottom:1px solid #272727;
-  backdrop-filter:blur(10px);
+/* LOGIN */
+
+.login{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:
+        radial-gradient(circle at top,#450000,#070707 55%);
 }
 
-.nav{
-  max-width:1250px;
-  margin:auto;
-  min-height:72px;
-  padding:12px 20px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
+.login-box{
+    width:100%;
+    max-width:430px;
+    background:#111;
+    border:1px solid #292929;
+    border-radius:24px;
+    padding:32px;
+    box-shadow:0 25px 80px rgba(0,0,0,.7);
 }
 
 .logo{
-  font-size:20px;
-  font-weight:900;
-  letter-spacing:.5px;
+    text-align:center;
+    font-size:29px;
+    font-weight:900;
+    margin-bottom:7px;
 }
 
 .logo span{
-  color:#e00000;
+    color:#e00000;
 }
 
-.nav-actions{
-  display:flex;
-  gap:10px;
+.login-sub{
+    text-align:center;
+    color:#888;
+    margin-bottom:28px;
+}
+
+.input-group{
+    margin-bottom:15px;
+}
+
+.input-group label{
+    display:block;
+    color:#bbb;
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+.input-group input{
+    width:100%;
+    padding:14px;
+    background:#181818;
+    border:1px solid #333;
+    border-radius:11px;
+    color:#fff;
+    outline:none;
+}
+
+.input-group input:focus{
+    border-color:#e00000;
+}
+
+.primary{
+    width:100%;
+    border:0;
+    padding:14px;
+    border-radius:11px;
+    background:#e00000;
+    color:#fff;
+    font-weight:800;
+}
+
+.primary:hover{
+    background:#ff1818;
+}
+
+.error{
+    display:none;
+    margin-top:14px;
+    padding:12px;
+    background:#350707;
+    border:1px solid #5d1111;
+    color:#ff7777;
+    border-radius:10px;
+}
+
+/* APP */
+
+.app{
+    display:none;
+    min-height:100vh;
+}
+
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(8,8,8,.96);
+    border-bottom:1px solid #242424;
+    backdrop-filter:blur(15px);
+}
+
+.topbar-inner{
+    max-width:1500px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.brand{
+    font-size:22px;
+    font-weight:900;
+}
+
+.brand span{
+    color:#e00000;
+}
+
+.top-buttons{
+    display:flex;
+    gap:8px;
+}
+
+.top-btn{
+    border:1px solid #333;
+    background:#151515;
+    color:#fff;
+    border-radius:9px;
+    padding:10px 13px;
+}
+
+.top-btn:hover{
+    border-color:#e00000;
+}
+
+/* LAYOUT */
+
+.layout{
+    max-width:1500px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:230px 1fr;
+    min-height:calc(100vh - 66px);
+}
+
+.sidebar{
+    border-right:1px solid #222;
+    padding:20px 13px;
 }
 
 .nav-btn{
-  text-decoration:none;
-  color:#fff;
-  border:1px solid #333;
-  background:#151515;
-  padding:10px 15px;
-  border-radius:9px;
-  font-weight:bold;
+    width:100%;
+    text-align:left;
+    border:0;
+    background:transparent;
+    color:#999;
+    padding:13px;
+    border-radius:10px;
+    margin-bottom:5px;
 }
 
-.nav-btn:hover{
-  border-color:#e00000;
+.nav-btn:hover,
+.nav-btn.active{
+    background:#210606;
+    color:#fff;
 }
 
-.hero{
-  padding:75px 20px 100px;
-  text-align:center;
-  background:
-    radial-gradient(circle at center,#350000 0%,#140000 28%,#070707 68%);
+.content{
+    padding:25px;
+    min-width:0;
 }
 
-.hero small{
-  color:#e00000;
-  font-weight:bold;
-  letter-spacing:2px;
+.page{
+    display:none;
 }
 
-.hero h1{
-  font-size:clamp(36px,7vw,72px);
-  margin:15px 0;
-  line-height:1;
+.page.active{
+    display:block;
 }
 
-.hero h1 span{
-  color:#e00000;
+.page-title{
+    font-size:31px;
+    font-weight:900;
+    margin-bottom:5px;
 }
 
-.hero p{
-  color:#aaa;
-  max-width:700px;
-  margin:auto;
-  font-size:18px;
-  line-height:1.6;
+.page-description{
+    color:#888;
+    margin-bottom:25px;
 }
+
+/* STATS */
 
 .stats{
-  max-width:1150px;
-  margin:-45px auto 45px;
-  padding:0 20px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  position:relative;
-  z-index:5;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:20px;
 }
 
 .stat{
-  background:#121212;
-  border:1px solid #292929;
-  border-radius:16px;
-  padding:23px;
-  text-align:center;
-  box-shadow:0 15px 40px rgba(0,0,0,.25);
+    background:#111;
+    border:1px solid #262626;
+    border-radius:17px;
+    padding:20px;
 }
 
-.stat strong{
-  display:block;
-  font-size:30px;
-  color:#e00000;
-  margin-bottom:7px;
+.stat-label{
+    color:#888;
+    font-size:13px;
+    margin-bottom:11px;
 }
 
-.stat span{
-  color:#888;
-  font-size:14px;
+.stat-value{
+    font-size:30px;
+    font-weight:900;
 }
 
-.container{
-  width:min(1250px,100%);
-  margin:auto;
-  padding:0 20px;
+.red{
+    color:#ff2727;
 }
 
-.toolbar{
-  background:#101010;
-  border:1px solid #292929;
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:25px;
+/* PANELS */
+
+.grid2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
 }
 
-.filters{
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr;
-  gap:12px;
+.panel{
+    background:#111;
+    border:1px solid #262626;
+    border-radius:17px;
+    padding:20px;
+    margin-bottom:18px;
 }
 
-input,
-select{
-  width:100%;
-  background:#080808;
-  color:#fff;
-  border:1px solid #333;
-  border-radius:10px;
-  padding:14px;
-  outline:none;
+.panel h2{
+    font-size:19px;
+    margin-bottom:16px;
 }
 
-input:focus,
-select:focus{
-  border-color:#e00000;
+.panel-sub{
+    color:#777;
+    font-size:13px;
+    margin-top:-10px;
+    margin-bottom:17px;
 }
 
-.results{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:18px;
-  color:#888;
+/* EVENTS */
+
+.event{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 13px;
+    background:#181818;
+    border-radius:9px;
+    margin-bottom:8px;
 }
 
-.results strong{
-  color:#fff;
+.event-name{
+    color:#ccc;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:22px;
+.event-count{
+    color:#ff3030;
+    font-weight:900;
 }
 
-.card{
-  background:#111;
-  border:1px solid #292929;
-  border-radius:17px;
-  overflow:hidden;
-  transition:.2s;
+/* VEHICLES */
+
+.vehicle{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:14px 0;
+    border-bottom:1px solid #242424;
 }
 
-.card:hover{
-  transform:translateY(-5px);
-  border-color:#e00000;
-  box-shadow:0 15px 45px rgba(0,0,0,.35);
+.vehicle:last-child{
+    border-bottom:0;
 }
 
-.card-image{
-  height:235px;
-  background:#181818;
-  position:relative;
-  overflow:hidden;
+.vehicle-name{
+    font-weight:bold;
 }
 
-.card-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
+.vehicle-meta{
+    color:#777;
+    font-size:13px;
+    margin-top:4px;
 }
 
-.badges{
-  position:absolute;
-  top:12px;
-  left:12px;
-  right:12px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
+.vehicle-actions{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
 }
 
-.badge{
-  background:#e00000;
-  color:#fff;
-  padding:6px 9px;
-  border-radius:6px;
-  font-size:11px;
-  font-weight:900;
+.action{
+    border:1px solid #333;
+    background:#181818;
+    color:#fff;
+    padding:8px 10px;
+    border-radius:8px;
+    font-size:12px;
 }
 
-.badge.dark{
-  background:#111;
-  border:1px solid #555;
+.action:hover{
+    border-color:#e00000;
 }
 
-.card-body{
-  padding:19px;
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
 }
 
-.card-title{
-  font-size:21px;
-  margin-bottom:9px;
+.full{
+    grid-column:1/-1;
 }
 
-.card-info{
-  color:#888;
-  font-size:14px;
-  line-height:1.7;
+.field label{
+    display:block;
+    color:#aaa;
+    font-size:13px;
+    margin-bottom:6px;
 }
 
-.card-price{
-  font-size:25px;
-  font-weight:900;
-  margin:15px 0;
+.field input,
+.field select,
+.field textarea{
+    width:100%;
+    background:#181818;
+    border:1px solid #333;
+    color:#fff;
+    border-radius:10px;
+    padding:12px;
+    outline:none;
 }
 
-.card-buttons{
-  display:grid;
-  grid-template-columns:1fr auto auto;
-  gap:8px;
+.field textarea{
+    min-height:120px;
+    resize:vertical;
 }
 
-.btn{
-  border:0;
-  border-radius:9px;
-  padding:11px 13px;
-  font-weight:800;
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+    border-color:#e00000;
 }
 
-.btn-primary{
-  background:#e00000;
-  color:#fff;
+.checks{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
 }
 
-.btn-secondary{
-  background:#292929;
-  color:#fff;
+.check{
+    background:#181818;
+    border:1px solid #2c2c2c;
+    padding:11px;
+    border-radius:9px;
 }
 
-.btn:hover{
-  opacity:.85;
+.check label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#ccc;
+    font-size:13px;
 }
 
-.empty{
-  grid-column:1/-1;
-  padding:70px 20px;
-  text-align:center;
-  background:#101010;
-  border:1px solid #292929;
-  border-radius:16px;
+.form-actions{
+    margin-top:18px;
+    display:flex;
+    gap:10px;
 }
 
-.empty h2{
-  margin-bottom:10px;
+.save{
+    border:0;
+    background:#e00000;
+    color:#fff;
+    padding:13px 18px;
+    border-radius:10px;
+    font-weight:bold;
 }
 
-.empty p{
-  color:#777;
+.cancel{
+    border:1px solid #333;
+    background:#181818;
+    color:#fff;
+    padding:13px 18px;
+    border-radius:10px;
 }
 
-.loading{
-  grid-column:1/-1;
-  text-align:center;
-  padding:70px 20px;
-  color:#aaa;
+/* ACTIVITY */
+
+.activity{
+    max-height:430px;
+    overflow:auto;
 }
 
-.error-box{
-  grid-column:1/-1;
-  background:#190000;
-  border:1px solid #e00000;
-  border-radius:15px;
-  padding:30px;
-  text-align:center;
+.activity-row{
+    padding:12px 0;
+    border-bottom:1px solid #222;
 }
 
-.error-box h2{
-  color:#e00000;
-  margin-bottom:10px;
+.activity-row strong{
+    display:block;
+    margin-bottom:4px;
 }
 
-.error-box p{
-  color:#aaa;
-  margin-bottom:18px;
+.activity-row span{
+    color:#777;
+    font-size:12px;
 }
 
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:5000;
-  background:rgba(0,0,0,.92);
-  padding:20px;
-  overflow:auto;
-}
-
-.modal.active{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.modal-box{
-  width:min(900px,100%);
-  background:#111;
-  border:1px solid #333;
-  border-radius:18px;
-  overflow:hidden;
-}
-
-.modal-top{
-  position:relative;
-}
-
-.modal-image{
-  width:100%;
-  height:min(55vh,480px);
-  object-fit:cover;
-  display:block;
-  background:#181818;
-}
-
-.modal-close{
-  position:absolute;
-  top:12px;
-  right:12px;
-  border:0;
-  background:rgba(0,0,0,.75);
-  color:#fff;
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  font-size:20px;
-}
-
-.modal-content{
-  padding:25px;
-}
-
-.modal-content h2{
-  font-size:30px;
-  margin-bottom:10px;
-}
-
-.modal-meta{
-  color:#999;
-  margin-bottom:15px;
-}
-
-.modal-price{
-  font-size:30px;
-  font-weight:900;
-  margin-bottom:15px;
-}
-
-.modal-description{
-  color:#aaa;
-  line-height:1.7;
-  white-space:pre-line;
-}
-
-.modal-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:22px;
-}
-
-.whatsapp{
-  display:block;
-  background:#159447;
-  color:#fff;
-  text-align:center;
-  text-decoration:none;
-  border-radius:10px;
-  padding:14px;
-  font-weight:900;
-}
-
-footer{
-  margin-top:80px;
-  border-top:1px solid #222;
-  padding:35px 20px;
-  text-align:center;
-  color:#666;
-}
+/* TOAST */
 
 .toast{
-  position:fixed;
-  left:50%;
-  bottom:25px;
-  transform:translateX(-50%) translateY(100px);
-  background:#fff;
-  color:#000;
-  padding:13px 20px;
-  border-radius:10px;
-  font-weight:bold;
-  z-index:9000;
-  transition:.25s;
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:100;
+    background:#151515;
+    border:1px solid #333;
+    padding:14px 17px;
+    border-radius:12px;
+    display:none;
+    box-shadow:0 15px 40px rgba(0,0,0,.5);
 }
 
-.toast.show{
-  transform:translateX(-50%) translateY(0);
+.loading,
+.empty{
+    color:#777;
+    padding:15px 0;
 }
 
-@media(max-width:950px){
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-  }
+/* MOBILE */
 
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
+.mobile-menu{
+    display:none;
 }
 
-@media(max-width:700px){
-  .filters{
-    grid-template-columns:1fr;
-  }
+@media(max-width:1000px){
 
-  .grid{
-    grid-template-columns:1fr;
-  }
+    .layout{
+        grid-template-columns:1fr;
+    }
 
-  .stats{
-    grid-template-columns:1fr 1fr;
-  }
+    .sidebar{
+        display:none;
+        border-right:0;
+        border-bottom:1px solid #222;
+    }
 
-  .nav{
-    flex-direction:column;
-  }
+    .sidebar.open{
+        display:block;
+    }
 
-  .hero{
-    padding:55px 20px 85px;
-  }
+    .mobile-menu{
+        display:block;
+        border:1px solid #333;
+        background:#151515;
+        color:#fff;
+        padding:9px 12px;
+        border-radius:8px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid2{
+        grid-template-columns:1fr;
+    }
 }
 
-@media(max-width:450px){
-  .stats{
-    grid-template-columns:1fr;
-  }
+@media(max-width:600px){
 
-  .card-buttons{
-    grid-template-columns:1fr 1fr 1fr;
-  }
+    .topbar-inner{
+        padding:12px;
+    }
 
-  .card-buttons .btn-primary{
-    grid-column:1/-1;
-  }
+    .brand{
+        font-size:18px;
+    }
 
-  .modal-actions{
-    grid-template-columns:1fr;
-  }
+    .top-buttons .top-btn:first-child{
+        display:none;
+    }
+
+    .content{
+        padding:16px;
+    }
+
+    .page-title{
+        font-size:25px;
+    }
+
+    .stats{
+        gap:9px;
+    }
+
+    .stat{
+        padding:15px;
+    }
+
+    .stat-value{
+        font-size:24px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .checks{
+        grid-template-columns:1fr;
+    }
+
+    .vehicle{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .vehicle-actions{
+        width:100%;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="nav">
+<!-- LOGIN -->
 
-    <div class="logo">
-      MALESPINA <span>AUTOMOTORES PRO</span>
-    </div>
+<section class="login" id="login">
 
-    <div class="nav-actions">
-      <a href="admin.html" class="nav-btn">
-        ADMIN PRO
-      </a>
-    </div>
+    <div class="login-box">
 
-  </div>
-</header>
+        <div class="logo">
+            MALESPINA <span>PRO</span>
+        </div>
 
-<section class="hero">
+        <div class="login-sub">
+            Centro de control del concesionario
+        </div>
 
-  <small>MALESPINA AUTOMOTORES</small>
+        <div class="input-group">
+            <label>Email</label>
+            <input id="email" type="email" placeholder="Email">
+        </div>
 
-  <h1>
-    Encontrá tu próximo
-    <span>vehículo</span>
-  </h1>
+        <div class="input-group">
+            <label>Contraseña</label>
+            <input id="password" type="password" placeholder="Contraseña">
+        </div>
 
-  <p>
-    Catálogo profesional de vehículos disponibles.
-    Consultá, compartí y guardá tus favoritos.
-  </p>
-
-</section>
-
-<section class="stats">
-
-  <div class="stat">
-    <strong id="statTotal">0</strong>
-    <span>Vehículos</span>
-  </div>
-
-  <div class="stat">
-    <strong id="statDestacados">0</strong>
-    <span>Destacados</span>
-  </div>
-
-  <div class="stat">
-    <strong id="statOfertas">0</strong>
-    <span>Ofertas</span>
-  </div>
-
-  <div class="stat">
-    <strong id="statFavoritos">0</strong>
-    <span>Favoritos</span>
-  </div>
-
-</section>
-
-<main class="container">
-
-  <section class="toolbar">
-
-    <div class="filters">
-
-      <input
-        id="busqueda"
-        type="text"
-        placeholder="Buscar marca, modelo o palabra..."
-      >
-
-      <select id="marca">
-        <option value="">
-          Todas las marcas
-        </option>
-      </select>
-
-      <select id="orden">
-        <option value="nuevo">
-          Más recientes
-        </option>
-
-        <option value="precioMenor">
-          Precio menor
-        </option>
-
-        <option value="precioMayor">
-          Precio mayor
-        </option>
-
-        <option value="anioMayor">
-          Año más nuevo
-        </option>
-
-      </select>
-
-    </div>
-
-  </section>
-
-  <div class="results">
-    <div>
-      Resultados:
-      <strong id="cantidadResultados">0</strong>
-    </div>
-
-    <div>
-      MALESPINA PRO
-    </div>
-  </div>
-
-  <section id="listaAutos" class="grid">
-
-    <div class="loading">
-      Cargando vehículos...
-    </div>
-
-  </section>
-
-</main>
-
-<footer>
-  MALESPINA Automotores · Salta<br>
-  WhatsApp: 387 863 6763
-</footer>
-
-<div id="modal" class="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-top">
-
-      <img
-        id="modalImagen"
-        class="modal-image"
-        src=""
-        alt="Vehículo"
-      >
-
-      <button
-        class="modal-close"
-        onclick="cerrarModal()"
-      >
-        ×
-      </button>
-
-    </div>
-
-    <div class="modal-content">
-
-      <h2 id="modalTitulo"></h2>
-
-      <div
-        id="modalMeta"
-        class="modal-meta"
-      ></div>
-
-      <div
-        id="modalPrecio"
-        class="modal-price"
-      ></div>
-
-      <div
-        id="modalDescripcion"
-        class="modal-description"
-      ></div>
-
-      <div class="modal-actions">
-
-        <a
-          id="modalWhatsapp"
-          class="whatsapp"
-          href="#"
-          target="_blank"
-        >
-          Consultar por WhatsApp
-        </a>
-
-        <button
-          class="btn btn-secondary"
-          onclick="compartirVehiculoActual()"
-        >
-          Compartir vehículo
+        <button class="primary" onclick="login()">
+            ENTRAR AL ADMIN PRO
         </button>
 
-      </div>
+        <div class="error" id="loginError"></div>
 
     </div>
 
-  </div>
+</section>
+
+
+<!-- APP -->
+
+<section class="app" id="app">
+
+<header class="topbar">
+
+    <div class="topbar-inner">
+
+        <button
+            class="mobile-menu"
+            onclick="toggleMenu()">
+            ☰
+        </button>
+
+        <div class="brand">
+            MALESPINA <span>PRO</span>
+        </div>
+
+        <div class="top-buttons">
+
+            <button
+                class="top-btn"
+                onclick="window.open('./index.html','_blank')">
+                Ver página
+            </button>
+
+            <button
+                class="top-btn"
+                onclick="logout()">
+                Salir
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <button
+            class="nav-btn active"
+            onclick="showPage('inicio',this)">
+            📊 Inicio
+        </button>
+
+        <button
+            class="nav-btn"
+            onclick="showPage('vehiculos',this)">
+            🚗 Vehículos
+        </button>
+
+        <button
+            class="nav-btn"
+            onclick="showPage('nuevo',this)">
+            ➕ Publicar vehículo
+        </button>
+
+        <button
+            class="nav-btn"
+            onclick="showPage('analytics',this)">
+            📈 Analytics
+        </button>
+
+        <button
+            class="nav-btn"
+            onclick="showPage('actividad',this)">
+            ⚡ Actividad
+        </button>
+
+        <button
+            class="nav-btn"
+            onclick="showPage('configuracion',this)">
+            ⚙️ Configuración
+        </button>
+
+    </aside>
+
+
+    <!-- CONTENT -->
+
+    <main class="content">
+
+
+        <!-- INICIO -->
+
+        <section
+            class="page active"
+            id="page-inicio">
+
+            <div class="page-title">
+                Centro de control
+            </div>
+
+            <div class="page-description">
+                Toda la actividad de MALESPINA Automotores PRO.
+            </div>
+
+
+            <div class="stats">
+
+                <div class="stat">
+                    <div class="stat-label">
+                        VISITAS
+                    </div>
+
+                    <div
+                        class="stat-value red"
+                        id="statVisitas">
+                        0
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">
+                        VEHÍCULOS
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="statVehiculos">
+                        0
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">
+                        WHATSAPP
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="statWhatsapp">
+                        0
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">
+                        FAVORITOS
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="statFavoritos">
+                        0
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="grid2">
+
+                <div class="panel">
+
+                    <h2>
+                        Interacciones
+                    </h2>
+
+                    <div id="resumenEventos">
+                        <div class="loading">
+                            Cargando...
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <h2>
+                        Última actividad
+                    </h2>
+
+                    <div
+                        class="activity"
+                        id="ultimosEventos">
+                        <div class="loading">
+                            Cargando...
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- VEHICULOS -->
+
+        <section
+            class="page"
+            id="page-vehiculos">
+
+            <div class="page-title">
+                Vehículos
+            </div>
+
+            <div class="page-description">
+                Administrá todo el inventario del concesionario.
+            </div>
+
+            <div class="panel">
+
+                <h2>
+                    Inventario actual
+                </h2>
+
+                <div id="listaVehiculos">
+                    <div class="loading">
+                        Cargando vehículos...
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NUEVO -->
+
+        <section
+            class="page"
+            id="page-nuevo">
+
+            <div class="page-title">
+                Publicar vehículo
+            </div>
+
+            <div class="page-description">
+                Agregá un vehículo al catálogo PRO.
+            </div>
+
+
+            <div class="panel">
+
+                <div class="form-grid">
+
+                    <div class="field">
+                        <label>Marca</label>
+                        <input id="marca" placeholder="Ej: Toyota">
+                    </div>
+
+                    <div class="field">
+                        <label>Modelo</label>
+                        <input id="modelo" placeholder="Ej: Corolla">
+                    </div>
+
+                    <div class="field">
+                        <label>Año</label>
+                        <input id="anio" type="number">
+                    </div>
+
+                    <div class="field">
+                        <label>Kilómetros</label>
+                        <input id="kilometros" type="number">
+                    </div>
+
+                    <div class="field">
+                        <label>Precio</label>
+                        <input id="precio" type="number">
+                    </div>
+
+                    <div class="field">
+
+                        <label>Combustible</label>
+
+                        <select id="combustible">
+
+                            <option value="">
+                                Seleccionar
+                            </option>
+
+                            <option>
+                                Nafta
+                            </option>
+
+                            <option>
+                                Diesel
+                            </option>
+
+                            <option>
+                                Híbrido
+                            </option>
+
+                            <option>
+                                Eléctrico
+                            </option>
+
+                            <option>
+                                GNC
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Transmisión</label>
+
+                        <select id="transmision">
+
+                            <option value="">
+                                Seleccionar
+                            </option>
+
+                            <option>
+                                Manual
+                            </option>
+
+                            <option>
+                                Automática
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Entrega</label>
+
+                        <input
+                            id="entrega"
+                            placeholder="Ej: Inmediata">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Cuotas</label>
+
+                        <input
+                            id="cuotas"
+                            placeholder="Ej: Hasta 24 cuotas">
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            URL de imagen principal
+                        </label>
+
+                        <input
+                            id="imagen"
+                            placeholder="https://...">
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            URLs de imágenes adicionales
+                        </label>
+
+                        <textarea
+                            id="imagenes"
+                            placeholder="Una URL por línea"></textarea>
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            Descripción
+                        </label>
+
+                        <textarea
+                            id="descripcion"
+                            placeholder="Descripción del vehículo"></textarea>
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <div class="checks">
+
+                            <div class="check">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="apto_credito">
+                                    Apto crédito
+                                </label>
+                            </div>
+
+                            <div class="check">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="financiado">
+                                    Financiación
+                                </label>
+                            </div>
+
+                            <div class="check">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="consignacion">
+                                    Consignación
+                                </label>
+                            </div>
+
+                            <div class="check">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="destacado">
+                                    ⭐ Destacado
+                                </label>
+                            </div>
+
+                            <div class="check">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="oferta">
+                                    🔥 Oferta
+                                </label>
+                            </div>
+
+                            <div class="check">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="vendido">
+                                    🚫 Vendido
+                                </label>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        class="save"
+                        onclick="guardarVehiculo()">
+                        PUBLICAR VEHÍCULO
+                    </button>
+
+                    <button
+                        class="cancel"
+                        onclick="limpiarFormulario()">
+                        Limpiar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ANALYTICS -->
+
+        <section
+            class="page"
+            id="page-analytics">
+
+            <div class="page-title">
+                Analytics
+            </div>
+
+            <div class="page-description">
+                Medí qué hacen los visitantes dentro de la página.
+            </div>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <div class="stat-label">
+                        VISITAS
+                    </div>
+                    <div
+                        class="stat-value red"
+                        id="aVisitas">
+                        0
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">
+                        APERTURAS
+                    </div>
+                    <div
+                        class="stat-value"
+                        id="aVehiculos">
+                        0
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">
+                        WHATSAPP
+                    </div>
+                    <div
+                        class="stat-value"
+                        id="aWhatsapp">
+                        0
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">
+                        COMPARTIDOS
+                    </div>
+                    <div
+                        class="stat-value"
+                        id="aCompartidos">
+                        0
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>
+                    Eventos registrados
+                </h2>
+
+                <div id="analyticsEventos">
+                    <div class="loading">
+                        Cargando analytics...
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ACTIVIDAD -->
+
+        <section
+            class="page"
+            id="page-actividad">
+
+            <div class="page-title">
+                Actividad
+            </div>
+
+            <div class="page-description">
+                Últimas interacciones registradas por la plataforma.
+            </div>
+
+            <div class="panel">
+
+                <div
+                    class="activity"
+                    id="actividadCompleta">
+                    <div class="loading">
+                        Cargando actividad...
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONFIGURACION -->
+
+        <section
+            class="page"
+            id="page-configuracion">
+
+            <div class="page-title">
+                Configuración
+            </div>
+
+            <div class="page-description">
+                Datos principales del concesionario.
+            </div>
+
+            <div class="panel">
+
+                <div class="form-grid">
+
+                    <div class="field">
+
+                        <label>
+                            WhatsApp
+                        </label>
+
+                        <input
+                            id="configWhatsapp"
+                            value="543878636763">
+
+                    </div>
+
+                    <div class="field">
+
+                        <label>
+                            Instagram
+                        </label>
+
+                        <input
+                            id="configInstagram"
+                            value="@Sergiomalespina24">
+
+                    </div>
+
+                    <div class="field full">
+
+                        <label>
+                            Nombre del concesionario
+                        </label>
+
+                        <input
+                            id="configNombre"
+                            value="MALESPINA Automotores">
+
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <button
+                        class="save"
+                        onclick="guardarConfiguracion()">
+                        GUARDAR CONFIGURACIÓN
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
 
 </div>
 
-<div id="toast" class="toast"></div>
+</section>
+
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
 
 <script>
 
-/* =========================================================
-   CONFIGURACIÓN PRO
-   ========================================================= */
+/* ==============================
+   CONFIGURACIÓN
+============================== */
 
 const SUPABASE_URL =
-  "https://mbrcbeqbtllajgcqujxv.supabase.co";
+"https://mbrcbeqbtllajgcqujxv.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_-j0aKO6FadT11STSQ7w0jg_1YP-dtTS";
+"sb_publishable_-j0aKO6FadT11STSQ7w0jg_1YP-dtTS";
 
-/*
-  IMPORTANTE:
-
-  PRO usa EXCLUSIVAMENTE:
-
-  vehiculos_pro
-
-  NO usa:
-  vehiculos
-  vehiculos_standard
-*/
-
-const TABLA_PRO = "vehiculos_pro";
-
-const TABLA_ANALYTICS = "analytics_eventos";
-
-const WHATSAPP = "543878636763";
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
-/* =========================================================
-   VARIABLES
-   ========================================================= */
+/* ==============================
+   LOGIN
+============================== */
 
-let todosLosVehiculos = [];
+async function login(){
 
-let vehiculosMostrados = [];
+    const email =
+        document.getElementById("email").value.trim();
 
-let vehiculoActual = null;
+    const password =
+        document.getElementById("password").value;
 
+    const error =
+        document.getElementById("loginError");
 
-/* =========================================================
-   ELEMENTOS
-   ========================================================= */
+    error.style.display = "none";
 
-const listaAutos =
-  document.getElementById("listaAutos");
+    try{
 
-const busqueda =
-  document.getElementById("busqueda");
+        if(!email || !password){
 
-const marca =
-  document.getElementById("marca");
+            throw new Error(
+                "Completá email y contraseña."
+            );
 
-const orden =
-  document.getElementById("orden");
+        }
 
-const cantidadResultados =
-  document.getElementById("cantidadResultados");
+        const {data,error:loginError} =
+            await supabaseClient.auth.signInWithPassword({
+                email,
+                password
+            });
 
+        if(loginError){
+            throw loginError;
+        }
 
-/* =========================================================
-   UTILIDADES
-   ========================================================= */
+        if(!data.session){
+            throw new Error(
+                "No se pudo iniciar sesión."
+            );
+        }
 
-function esc(valor){
+        mostrarApp();
 
-  return String(valor ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+    }catch(e){
+
+        console.error(e);
+
+        error.textContent =
+            e.message ||
+            "No se pudo iniciar sesión.";
+
+        error.style.display = "block";
+
+    }
+
 }
 
 
-function mostrarToast(mensaje){
+async function comprobarSesion(){
 
-  const toast =
-    document.getElementById("toast");
+    const {data} =
+        await supabaseClient.auth.getSession();
 
-  toast.textContent = mensaje;
+    if(data.session){
 
-  toast.classList.add("show");
+        mostrarApp();
 
-  setTimeout(()=>{
-    toast.classList.remove("show");
-  },2200);
+    }
+
 }
 
 
-function precioFormateado(precio){
+function mostrarApp(){
 
-  if(
-    precio === null ||
-    precio === undefined ||
-    precio === "" ||
-    Number(precio) === 0
-  ){
-    return "Consultar precio";
-  }
+    document.getElementById("login").style.display =
+        "none";
 
-  return "$ " +
-    Number(precio).toLocaleString("es-AR");
+    document.getElementById("app").style.display =
+        "block";
+
+    cargarTodo();
+
 }
 
 
-function imagenVehiculo(auto){
+async function logout(){
 
-  if(
-    auto.imagen &&
-    String(auto.imagen).trim()
-  ){
-    return auto.imagen;
-  }
+    await supabaseClient.auth.signOut();
 
-  if(
-    Array.isArray(auto.imagenes) &&
-    auto.imagenes.length
-  ){
-    return auto.imagenes[0];
-  }
+    location.reload();
 
-  return "https://via.placeholder.com/1000x650?text=MALESPINA+AUTOMOTORES";
 }
 
 
-/* =========================================================
-   CARGAR VEHÍCULOS
-   ========================================================= */
+/* ==============================
+   NAVEGACIÓN
+============================== */
+
+function showPage(nombre,boton){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(p => p.classList.remove("active"));
+
+    document
+        .getElementById("page-"+nombre)
+        .classList.add("active");
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(b => b.classList.remove("active"));
+
+    boton.classList.add("active");
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+}
+
+
+function toggleMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
+
+
+/* ==============================
+   CARGA GENERAL
+============================== */
+
+async function cargarTodo(){
+
+    await cargarVehiculos();
+
+    await cargarAnalytics();
+
+}
+
+
+/* ==============================
+   VEHÍCULOS
+============================== */
 
 async function cargarVehiculos(){
 
-  listaAutos.innerHTML = `
-    <div class="loading">
-      Cargando vehículos...
-    </div>
-  `;
+    const contenedor =
+        document.getElementById("listaVehiculos");
 
-  try{
+    try{
 
-    const url =
-      SUPABASE_URL +
-      "/rest/v1/" +
-      TABLA_PRO +
-      "?select=*&order=id.desc";
+        const respuesta =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/vehiculos?select=*&order=id.desc`,
+                {
+                    headers:{
+                        apikey:SUPABASE_KEY,
+                        Authorization:
+                            `Bearer ${SUPABASE_KEY}`
+                    }
+                }
+            );
 
-    const controlador =
-      new AbortController();
+        if(!respuesta.ok){
 
-    const tiempo =
-      setTimeout(
-        ()=>controlador.abort(),
-        12000
-      );
+            throw new Error(
+                await respuesta.text()
+            );
 
-    const respuesta =
-      await fetch(
-        url,
-        {
-          method:"GET",
-          signal:controlador.signal,
-          headers:{
-            "apikey":SUPABASE_KEY,
-            "Authorization":
-              "Bearer " + SUPABASE_KEY
-          }
         }
-      );
 
-    clearTimeout(tiempo);
+        const autos =
+            await respuesta.json();
 
-    if(!respuesta.ok){
+        document.getElementById(
+            "statVehiculos"
+        ).textContent =
+            autos.length;
 
-      const error =
-        await respuesta.text();
 
-      throw new Error(
-        "Supabase " +
-        respuesta.status +
-        ": " +
-        error
-      );
-    }
+        if(!autos.length){
 
-    const datos =
-      await respuesta.json();
+            contenedor.innerHTML =
+                `<div class="empty">
+                    No hay vehículos publicados.
+                </div>`;
 
-    if(!Array.isArray(datos)){
+            return;
 
-      throw new Error(
-        "La respuesta de Supabase no es una lista."
-      );
-    }
+        }
 
-    todosLosVehiculos = datos;
 
-    console.log(
-      "PRO vehículos:",
-      todosLosVehiculos
-    );
+        contenedor.innerHTML =
+            autos.map(auto => {
 
-    actualizarEstadisticas();
+                const nombre =
+                    `${auto.marca || ""} ${auto.modelo || ""}`.trim();
 
-    cargarMarcas();
+                return `
+                    <div class="vehicle">
 
-    aplicarFiltros();
+                        <div>
+                            <div class="vehicle-name">
+                                ${escapeHTML(nombre)}
+                            </div>
 
-  }catch(error){
+                            <div class="vehicle-meta">
+                                ${auto.anio || "-"}
+                                ·
+                                ${auto.kilometros || 0} km
+                                ·
+                                ${auto.precio || "Consultar"}
+                            </div>
+                        </div>
 
-    console.error(
-      "ERROR CARGANDO PRO:",
-      error
-    );
+                        <div class="vehicle-actions">
 
-    listaAutos.innerHTML = `
-      <div class="error-box">
+                            <button
+                                class="action"
+                                onclick="verVehiculo(${auto.id})">
+                                Ver
+                            </button>
 
-        <h2>
-          No se pudieron cargar los vehículos
-        </h2>
+                            <button
+                                class="action"
+                                onclick="editarVehiculo(${auto.id})">
+                                Editar
+                            </button>
 
-        <p>
-          La página PRO no pudo comunicarse
-          correctamente con la base de datos.
-        </p>
+                            <button
+                                class="action"
+                                onclick="eliminarVehiculo(${auto.id})">
+                                Eliminar
+                            </button>
 
-        <button
-          class="btn btn-primary"
-          onclick="cargarVehiculos()"
-        >
-          Reintentar
-        </button>
+                        </div>
 
-      </div>
-    `;
-  }
+                    </div>
+                `;
 
-}
+            }).join("");
 
+    }catch(e){
 
-/* =========================================================
-   ESTADÍSTICAS
-   ========================================================= */
+        console.error(e);
 
-function actualizarEstadisticas(){
-
-  document.getElementById("statTotal")
-    .textContent =
-      todosLosVehiculos.length;
-
-  document.getElementById("statDestacados")
-    .textContent =
-      todosLosVehiculos.filter(
-        v => v.destacado === true
-      ).length;
-
-  document.getElementById("statOfertas")
-    .textContent =
-      todosLosVehiculos.filter(
-        v => v.oferta === true
-      ).length;
-
-  const favoritos =
-    obtenerFavoritos();
-
-  document.getElementById("statFavoritos")
-    .textContent =
-      favoritos.length;
-}
-
-
-/* =========================================================
-   MARCAS
-   ========================================================= */
-
-function cargarMarcas(){
-
-  const marcas = [
-    ...new Set(
-      todosLosVehiculos
-        .map(v => v.marca)
-        .filter(Boolean)
-    )
-  ].sort();
-
-  marca.innerHTML = `
-    <option value="">
-      Todas las marcas
-    </option>
-  `;
-
-  marcas.forEach(nombre => {
-
-    const option =
-      document.createElement("option");
-
-    option.value = nombre;
-
-    option.textContent = nombre;
-
-    marca.appendChild(option);
-
-  });
-
-}
-
-
-/* =========================================================
-   FILTROS
-   ========================================================= */
-
-function aplicarFiltros(){
-
-  const texto =
-    busqueda.value
-      .toLowerCase()
-      .trim();
-
-  const marcaSeleccionada =
-    marca.value;
-
-  const tipoOrden =
-    orden.value;
-
-  vehiculosMostrados =
-    todosLosVehiculos.filter(auto => {
-
-      const contenido = `
-        ${auto.marca || ""}
-        ${auto.modelo || ""}
-        ${auto.anio || ""}
-        ${auto.descripcion || ""}
-        ${auto.combustible || ""}
-        ${auto.transmision || ""}
-      `.toLowerCase();
-
-      const coincideTexto =
-        !texto ||
-        contenido.includes(texto);
-
-      const coincideMarca =
-        !marcaSeleccionada ||
-        auto.marca === marcaSeleccionada;
-
-      return
-        coincideTexto &&
-        coincideMarca;
-
-    });
-
-
-  if(tipoOrden === "precioMenor"){
-
-    vehiculosMostrados.sort(
-      (a,b) =>
-        Number(a.precio || 0) -
-        Number(b.precio || 0)
-    );
-
-  }
-
-
-  if(tipoOrden === "precioMayor"){
-
-    vehiculosMostrados.sort(
-      (a,b) =>
-        Number(b.precio || 0) -
-        Number(a.precio || 0)
-    );
-
-  }
-
-
-  if(tipoOrden === "anioMayor"){
-
-    vehiculosMostrados.sort(
-      (a,b) =>
-        Number(b.anio || 0) -
-        Number(a.anio || 0)
-    );
-
-  }
-
-
-  mostrarVehiculos();
-
-}
-
-
-/* =========================================================
-   MOSTRAR VEHÍCULOS
-   ========================================================= */
-
-function mostrarVehiculos(){
-
-  listaAutos.innerHTML = "";
-
-  cantidadResultados.textContent =
-    vehiculosMostrados.length;
-
-
-  if(!vehiculosMostrados.length){
-
-    listaAutos.innerHTML = `
-      <div class="empty">
-
-        <h2>
-          No encontramos vehículos
-        </h2>
-
-        <p>
-          Probá con otra búsqueda o marca.
-        </p>
-
-      </div>
-    `;
-
-    return;
-  }
-
-
-  vehiculosMostrados.forEach(auto => {
-
-    const card =
-      document.createElement("article");
-
-    card.className = "card";
-
-
-    const imagen =
-      imagenVehiculo(auto);
-
-
-    let badges = "";
-
-
-    if(auto.destacado){
-
-      badges += `
-        <span class="badge">
-          DESTACADO
-        </span>
-      `;
+        contenedor.innerHTML =
+            `<div class="empty">
+                No se pudieron cargar los vehículos.
+            </div>`;
 
     }
 
-
-    if(auto.oferta){
-
-      badges += `
-        <span class="badge">
-          OFERTA
-        </span>
-      `;
-
-    }
-
-
-    if(auto.apto_credito){
-
-      badges += `
-        <span class="badge dark">
-          APTO CRÉDITO
-        </span>
-      `;
-
-    }
-
-
-    if(auto.financiado){
-
-      badges += `
-        <span class="badge dark">
-          FINANCIACIÓN
-        </span>
-      `;
-
-    }
-
-
-    const km =
-      auto.kilometros !== null &&
-      auto.kilometros !== undefined &&
-      auto.kilometros !== ""
-        ? Number(auto.kilometros)
-            .toLocaleString("es-AR") +
-          " km"
-        : "Km no informado";
-
-
-    const detalles = [
-      auto.anio || null,
-      km,
-      auto.combustible || null,
-      auto.transmision || null
-    ]
-    .filter(Boolean)
-    .join(" · ");
-
-
-    const esFavorito =
-      obtenerFavoritos().includes(
-        Number(auto.id)
-      );
-
-
-    card.innerHTML = `
-
-      <div class="card-image">
-
-        <img
-          src="${esc(imagen)}"
-          alt="${esc(auto.marca)} ${esc(auto.modelo)}"
-          onerror="this.onerror=null;this.src='https://via.placeholder.com/1000x650?text=MALESPINA+AUTOMOTORES';"
-        >
-
-        <div class="badges">
-          ${badges}
-        </div>
-
-      </div>
-
-
-      <div class="card-body">
-
-        <h2 class="card-title">
-          ${esc(auto.marca || "")}
-          ${esc(auto.modelo || "")}
-        </h2>
-
-
-        <div class="card-info">
-          ${esc(detalles)}
-        </div>
-
-
-        <div class="card-price">
-          ${precioFormateado(auto.precio)}
-        </div>
-
-
-        <div class="card-buttons">
-
-          <button
-            class="btn btn-primary"
-            onclick="abrirVehiculo(${Number(auto.id)})"
-          >
-            Ver vehículo
-          </button>
-
-
-          <button
-            class="btn btn-secondary"
-            title="Favorito"
-            onclick="toggleFavorito(${Number(auto.id)})"
-          >
-            ${esFavorito ? "♥" : "♡"}
-          </button>
-
-
-          <button
-            class="btn btn-secondary"
-            title="Compartir"
-            onclick="compartirVehiculo(${Number(auto.id)})"
-          >
-            ↗
-          </button>
-
-        </div>
-
-      </div>
-
-    `;
-
-
-    listaAutos.appendChild(card);
-
-  });
-
 }
 
 
-/* =========================================================
-   FAVORITOS
-   ========================================================= */
+/* ==============================
+   GUARDAR VEHÍCULO
+============================== */
 
-function obtenerFavoritos(){
+async function guardarVehiculo(){
 
-  try{
+    const auto = {
 
-    return JSON.parse(
-      localStorage.getItem(
-        "malespina_pro_favoritos"
-      ) || "[]"
-    );
+        marca:valor("marca"),
 
-  }catch(e){
+        modelo:valor("modelo"),
 
-    return [];
+        anio:numero("anio"),
 
-  }
+        kilometros:numero("kilometros"),
 
-}
+        precio:numero("precio"),
 
+        combustible:valor("combustible"),
 
-function guardarFavoritos(lista){
+        transmision:valor("transmision"),
 
-  localStorage.setItem(
-    "malespina_pro_favoritos",
-    JSON.stringify(lista)
-  );
+        imagen:valor("imagen"),
 
-}
+        imagenes:
+            document
+            .getElementById("imagenes")
+            .value
+            .split("\n")
+            .map(x=>x.trim())
+            .filter(Boolean),
 
+        descripcion:valor("descripcion"),
 
-function toggleFavorito(id){
+        apto_credito:
+            checked("apto_credito"),
 
-  let favoritos =
-    obtenerFavoritos();
+        financiado:
+            checked("financiado"),
 
-  id = Number(id);
+        consignacion:
+            checked("consignacion"),
 
+        entrega:
+            valor("entrega"),
 
-  if(favoritos.includes(id)){
+        cuotas:
+            valor("cuotas"),
 
-    favoritos =
-      favoritos.filter(
-        x => Number(x) !== id
-      );
+        destacado:
+            checked("destacado"),
 
-    mostrarToast(
-      "Eliminado de favoritos"
-    );
+        oferta:
+            checked("oferta"),
 
-  }else{
+        vendido:
+            checked("vendido")
 
-    favoritos.push(id);
+    };
 
-    registrarEvento(
-      "favorito",
-      id
-    );
 
-    mostrarToast(
-      "Agregado a favoritos"
-    );
+    if(!auto.marca || !auto.modelo){
 
-  }
-
-
-  guardarFavoritos(favoritos);
-
-  actualizarEstadisticas();
-
-  mostrarVehiculos();
-
-}
-
-
-/* =========================================================
-   MODAL
-   ========================================================= */
-
-function abrirVehiculo(id){
-
-  const auto =
-    todosLosVehiculos.find(
-      v => Number(v.id) === Number(id)
-    );
-
-  if(!auto) return;
-
-
-  vehiculoActual = auto;
-
-
-  document.getElementById("modalImagen")
-    .src =
-      imagenVehiculo(auto);
-
-
-  document.getElementById("modalTitulo")
-    .textContent =
-      `${auto.marca || ""} ${auto.modelo || ""}`;
-
-
-  const meta = [
-    auto.anio,
-    auto.kilometros
-      ? Number(auto.kilometros)
-          .toLocaleString("es-AR") + " km"
-      : null,
-    auto.combustible,
-    auto.transmision
-  ]
-  .filter(Boolean)
-  .join(" · ");
-
-
-  document.getElementById("modalMeta")
-    .textContent =
-      meta || "Consultar detalles";
-
-
-  document.getElementById("modalPrecio")
-    .textContent =
-      precioFormateado(auto.precio);
-
-
-  document.getElementById("modalDescripcion")
-    .textContent =
-      auto.descripcion ||
-      "Consultanos para recibir más información sobre este vehículo.";
-
-
-  const mensaje =
-    encodeURIComponent(
-      `Hola! Quiero consultar por el ${auto.marca || ""} ${auto.modelo || ""}${auto.anio ? " " + auto.anio : ""}.`
-    );
-
-
-  document.getElementById("modalWhatsapp")
-    .href =
-      `https://wa.me/${WHATSAPP}?text=${mensaje}`;
-
-
-  document.getElementById("modal")
-    .classList.add("active");
-
-
-  registrarEvento(
-    "visita_vehiculo",
-    auto.id
-  );
-
-}
-
-
-/* =========================================================
-   CERRAR MODAL
-   ========================================================= */
-
-function cerrarModal(){
-
-  document.getElementById("modal")
-    .classList.remove("active");
-
-  vehiculoActual = null;
-
-}
-
-
-/* =========================================================
-   WHATSAPP
-   ========================================================= */
-
-document
-  .getElementById("modalWhatsapp")
-  .addEventListener(
-    "click",
-    function(){
-
-      if(vehiculoActual){
-
-        registrarEvento(
-          "whatsapp",
-          vehiculoActual.id
+        mostrarToast(
+            "Marca y modelo son obligatorios."
         );
 
-      }
-
-    }
-  );
-
-
-/* =========================================================
-   COMPARTIR
-   ========================================================= */
-
-async function compartirVehiculo(id){
-
-  const auto =
-    todosLosVehiculos.find(
-      v => Number(v.id) === Number(id)
-    );
-
-  if(!auto) return;
-
-
-  const url =
-    window.location.origin +
-    window.location.pathname +
-    "?vehiculo=" +
-    encodeURIComponent(auto.id);
-
-
-  try{
-
-    if(
-      navigator.share &&
-      /Android|iPhone|iPad/i.test(
-        navigator.userAgent
-      )
-    ){
-
-      await navigator.share({
-        title:
-          `${auto.marca || ""} ${auto.modelo || ""}`,
-        text:
-          "Mirá este vehículo de MALESPINA Automotores",
-        url:url
-      });
-
-    }else{
-
-      await navigator.clipboard.writeText(url);
-
-      mostrarToast(
-        "Link copiado"
-      );
+        return;
 
     }
 
 
-    registrarEvento(
-      "compartido",
-      auto.id
-    );
+    try{
 
-  }catch(error){
+        const respuesta =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/vehiculos`,
+                {
+                    method:"POST",
 
-    console.log(
-      "Compartir cancelado"
-    );
+                    headers:{
+                        apikey:SUPABASE_KEY,
+                        Authorization:
+                            `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type":
+                            "application/json",
+                        Prefer:
+                            "return=minimal"
+                    },
 
-  }
+                    body:
+                        JSON.stringify(auto)
+                }
+            );
+
+
+        if(!respuesta.ok){
+
+            throw new Error(
+                await respuesta.text()
+            );
+
+        }
+
+
+        mostrarToast(
+            "🚗 Vehículo publicado correctamente."
+        );
+
+        limpiarFormulario();
+
+        await cargarVehiculos();
+
+    }catch(e){
+
+        console.error(e);
+
+        mostrarToast(
+            "No se pudo publicar el vehículo."
+        );
+
+    }
 
 }
 
 
-async function compartirVehiculoActual(){
+/* ==============================
+   ELIMINAR
+============================== */
 
-  if(!vehiculoActual) return;
+async function eliminarVehiculo(id){
 
-  await compartirVehiculo(
-    vehiculoActual.id
-  );
+    if(!confirm(
+        "¿Seguro que querés eliminar este vehículo?"
+    )){
+        return;
+    }
+
+    try{
+
+        const respuesta =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/vehiculos?id=eq.${id}`,
+                {
+                    method:"DELETE",
+
+                    headers:{
+                        apikey:SUPABASE_KEY,
+                        Authorization:
+                            `Bearer ${SUPABASE_KEY}`
+                    }
+                }
+            );
+
+
+        if(!respuesta.ok){
+
+            throw new Error(
+                await respuesta.text()
+            );
+
+        }
+
+
+        mostrarToast(
+            "Vehículo eliminado."
+        );
+
+        await cargarVehiculos();
+
+    }catch(e){
+
+        console.error(e);
+
+        mostrarToast(
+            "No se pudo eliminar."
+        );
+
+    }
 
 }
 
 
-/* =========================================================
+/* ==============================
+   VER
+============================== */
+
+function verVehiculo(id){
+
+    window.open(
+        `./index.html?vehiculo=${id}`,
+        "_blank"
+    );
+
+}
+
+
+/* ==============================
+   EDITAR
+============================== */
+
+function editarVehiculo(id){
+
+    mostrarToast(
+        "Editor avanzado: lo conectamos en el siguiente módulo."
+    );
+
+    showPage(
+        "nuevo",
+        document.querySelectorAll(".nav-btn")[2]
+    );
+
+}
+
+
+/* ==============================
    ANALYTICS
-   ========================================================= */
+============================== */
 
-async function registrarEvento(
-  tipo,
-  vehiculoId
-){
+async function cargarAnalytics(){
 
-  try{
+    try{
 
-    await fetch(
-      SUPABASE_URL +
-      "/rest/v1/" +
-      TABLA_ANALYTICS,
-      {
-        method:"POST",
+        const respuesta =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/analytics_eventos?select=*&order=created_at.desc`,
+                {
+                    headers:{
+                        apikey:SUPABASE_KEY,
+                        Authorization:
+                            `Bearer ${SUPABASE_KEY}`
+                    }
+                }
+            );
 
-        headers:{
-          "apikey":SUPABASE_KEY,
-          "Authorization":
-            "Bearer " + SUPABASE_KEY,
-          "Content-Type":
-            "application/json",
-          "Prefer":
-            "return=minimal"
-        },
 
-        body:JSON.stringify({
+        if(!respuesta.ok){
 
-          tipo:String(tipo),
+            throw new Error(
+                await respuesta.text()
+            );
 
-          vehiculo_id:
-            vehiculoId === null ||
-            vehiculoId === undefined
-              ? null
-              : Number(vehiculoId)
+        }
+
+
+        const eventos =
+            await respuesta.json();
+
+
+        const conteos = {};
+
+        eventos.forEach(e => {
+
+            const tipo =
+                e.tipo || "otro";
+
+            conteos[tipo] =
+                (conteos[tipo] || 0) + 1;
+
+        });
+
+
+        document.getElementById(
+            "statVisitas"
+        ).textContent =
+            conteos.visita || 0;
+
+
+        document.getElementById(
+            "statWhatsapp"
+        ).textContent =
+            conteos.whatsapp || 0;
+
+
+        document.getElementById(
+            "statFavoritos"
+        ).textContent =
+            conteos.favorito || 0;
+
+
+        document.getElementById(
+            "aVisitas"
+        ).textContent =
+            conteos.visita || 0;
+
+
+        document.getElementById(
+            "aVehiculos"
+        ).textContent =
+            conteos.vehiculo || 0;
+
+
+        document.getElementById(
+            "aWhatsapp"
+        ).textContent =
+            conteos.whatsapp || 0;
+
+
+        document.getElementById(
+            "aCompartidos"
+        ).textContent =
+            conteos.compartir || 0;
+
+
+        const nombres = {
+
+            visita:"Visitas",
+
+            vehiculo:"Aperturas de vehículos",
+
+            whatsapp:"Clics a WhatsApp",
+
+            favorito:"Favoritos",
+
+            compartir:"Compartidos",
+
+            busqueda:"Búsquedas",
+
+            ia:"Consultas IA"
+
+        };
+
+
+        const resumen =
+            Object.entries(conteos)
+            .sort((a,b)=>b[1]-a[1])
+            .map(([tipo,cantidad]) => {
+
+                return `
+                    <div class="event">
+
+                        <span class="event-name">
+                            ${
+                                nombres[tipo]
+                                ||
+                                tipo
+                            }
+                        </span>
+
+                        <span class="event-count">
+                            ${cantidad}
+                        </span>
+
+                    </div>
+                `;
+
+            }).join("");
+
+
+        document.getElementById(
+            "resumenEventos"
+        ).innerHTML =
+            resumen ||
+            `<div class="empty">
+                Todavía no hay eventos.
+            </div>`;
+
+
+        document.getElementById(
+            "analyticsEventos"
+        ).innerHTML =
+            resumen ||
+            `<div class="empty">
+                Todavía no hay eventos.
+            </div>`;
+
+
+        const actividad =
+            document.getElementById(
+                "ultimosEventos"
+            );
+
+        const actividadCompleta =
+            document.getElementById(
+                "actividadCompleta"
+            );
+
+
+        const html =
+            eventos.slice(0,100)
+            .map(e => {
+
+                const fecha =
+                    e.created_at
+                    ? new Date(e.created_at)
+                        .toLocaleString("es-AR")
+                    : "";
+
+                return `
+                    <div class="activity-row">
+
+                        <strong>
+                            ${
+                                nombres[e.tipo]
+                                ||
+                                e.tipo
+                                ||
+                                "Actividad"
+                            }
+                        </strong>
+
+                        <span>
+                            ${
+                                e.vehiculo_id
+                                ? "Vehículo ID: "
+                                  + e.vehiculo_id
+                                : ""
+                            }
+                            ${fecha}
+                        </span>
+
+                    </div>
+                `;
+
+            }).join("");
+
+
+        actividad.innerHTML =
+            html ||
+            `<div class="empty">
+                Sin actividad todavía.
+            </div>`;
+
+
+        actividadCompleta.innerHTML =
+            html ||
+            `<div class="empty">
+                Sin actividad todavía.
+            </div>`;
+
+
+    }catch(e){
+
+        console.error(e);
+
+        mostrarToast(
+            "No se pudieron cargar los analytics."
+        );
+
+    }
+
+}
+
+
+/* ==============================
+   CONFIGURACIÓN
+============================== */
+
+function guardarConfiguracion(){
+
+    localStorage.setItem(
+        "malespina_config",
+        JSON.stringify({
+
+            whatsapp:
+                valor("configWhatsapp"),
+
+            instagram:
+                valor("configInstagram"),
+
+            nombre:
+                valor("configNombre")
 
         })
-      }
     );
 
-  }catch(error){
-
-    console.log(
-      "Analytics no disponible:",
-      error
+    mostrarToast(
+        "Configuración guardada."
     );
-
-  }
 
 }
 
 
-/* =========================================================
-   BÚSQUEDA
-   ========================================================= */
+/* ==============================
+   FORMULARIO
+============================== */
 
-let temporizadorBusqueda = null;
+function limpiarFormulario(){
 
-busqueda.addEventListener(
-  "input",
-  function(){
+    document
+        .querySelectorAll(
+            "#page-nuevo input"
+        )
+        .forEach(input => {
+
+            if(input.type === "checkbox"){
+                input.checked = false;
+            }else{
+                input.value = "";
+            }
+
+        });
+
+    document
+        .querySelectorAll(
+            "#page-nuevo textarea"
+        )
+        .forEach(x => x.value = "");
+
+}
+
+
+function valor(id){
+
+    return document
+        .getElementById(id)
+        .value
+        .trim();
+
+}
+
+
+function numero(id){
+
+    const value =
+        document.getElementById(id).value;
+
+    return value
+        ? Number(value)
+        : null;
+
+}
+
+
+function checked(id){
+
+    return document
+        .getElementById(id)
+        .checked;
+
+}
+
+
+/* ==============================
+   UTILIDADES
+============================== */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function mostrarToast(texto){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent =
+        texto;
+
+    toast.style.display =
+        "block";
 
     clearTimeout(
-      temporizadorBusqueda
+        window.toastTimer
     );
 
-    temporizadorBusqueda =
-      setTimeout(
-        aplicarFiltros,
-        200
-      );
+    window.toastTimer =
+        setTimeout(() => {
 
-  }
-);
+            toast.style.display =
+                "none";
 
-
-marca.addEventListener(
-  "change",
-  aplicarFiltros
-);
-
-
-orden.addEventListener(
-  "change",
-  aplicarFiltros
-);
-
-
-/* =========================================================
-   CERRAR MODAL AL TOCAR AFUERA
-   ========================================================= */
-
-document
-  .getElementById("modal")
-  .addEventListener(
-    "click",
-    function(event){
-
-      if(event.target === this){
-        cerrarModal();
-      }
-
-    }
-  );
-
-
-/* =========================================================
-   ESCAPE PARA CERRAR
-   ========================================================= */
-
-document.addEventListener(
-  "keydown",
-  function(event){
-
-    if(event.key === "Escape"){
-      cerrarModal();
-    }
-
-  }
-);
-
-
-/* =========================================================
-   ABRIR VEHÍCULO DESDE URL
-   ========================================================= */
-
-function abrirVehiculoDesdeURL(){
-
-  const parametros =
-    new URLSearchParams(
-      window.location.search
-    );
-
-  const id =
-    parametros.get("vehiculo");
-
-  if(!id) return;
-
-
-  const auto =
-    todosLosVehiculos.find(
-      v => Number(v.id) === Number(id)
-    );
-
-  if(auto){
-
-    abrirVehiculo(auto.id);
-
-  }
+        },3500);
 
 }
 
 
-/* =========================================================
-   VISITA GENERAL
-   ========================================================= */
-
-registrarEvento(
-  "visita",
-  null
-);
-
-
-/* =========================================================
+/* ==============================
    INICIO
-   ========================================================= */
+============================== */
 
-cargarVehiculos()
-  .then(
-    () => abrirVehiculoDesdeURL()
-  );
+comprobarSesion();
 
 </script>
 
