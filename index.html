@@ -1792,7 +1792,7 @@ async function cargarVehiculos(){
 
         const respuesta =
             await fetch(
-                `${SUPABASE_URL}/rest/v1/vehiculos?select=*&order=id.desc`,
+                `${SUPABASE_URL}/rest/v1/vehiculos_pro?select=*&order=id.desc`,
                 {
                     method:"GET",
 
