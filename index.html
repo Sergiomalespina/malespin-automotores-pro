@@ -3,245 +3,513 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>MALESPINA Automotores PRO</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   font-family:Arial,Helvetica,sans-serif;
-  background:#080808;
+  background:#070707;
   color:#fff;
+  min-height:100vh;
 }
+
+button,
+input,
+select{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
 header{
-  background:#0d0d0d;
-  border-bottom:1px solid #292929;
-  padding:18px 5%;
   position:sticky;
   top:0;
-  z-index:20;
+  z-index:1000;
+  background:rgba(7,7,7,.96);
+  border-bottom:1px solid #272727;
+  backdrop-filter:blur(10px);
 }
+
 .nav{
-  max-width:1200px;
+  max-width:1250px;
   margin:auto;
+  min-height:72px;
+  padding:12px 20px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
   gap:20px;
 }
+
 .logo{
-  font-size:22px;
+  font-size:20px;
   font-weight:900;
+  letter-spacing:.5px;
 }
-.logo span{color:#e00000}
-.admin{
-  color:#fff;
+
+.logo span{
+  color:#e00000;
+}
+
+.nav-actions{
+  display:flex;
+  gap:10px;
+}
+
+.nav-btn{
   text-decoration:none;
-  border:1px solid #e00000;
-  padding:10px 16px;
-  border-radius:8px;
+  color:#fff;
+  border:1px solid #333;
+  background:#151515;
+  padding:10px 15px;
+  border-radius:9px;
+  font-weight:bold;
 }
+
+.nav-btn:hover{
+  border-color:#e00000;
+}
+
 .hero{
-  padding:65px 5%;
-  background:linear-gradient(135deg,#080808,#170000);
+  padding:75px 20px 100px;
   text-align:center;
+  background:
+    radial-gradient(circle at center,#350000 0%,#140000 28%,#070707 68%);
 }
+
+.hero small{
+  color:#e00000;
+  font-weight:bold;
+  letter-spacing:2px;
+}
+
 .hero h1{
-  font-size:clamp(32px,6vw,64px);
-  margin-bottom:15px;
+  font-size:clamp(36px,7vw,72px);
+  margin:15px 0;
+  line-height:1;
 }
-.hero h1 span{color:#e00000}
+
+.hero h1 span{
+  color:#e00000;
+}
+
 .hero p{
   color:#aaa;
+  max-width:700px;
+  margin:auto;
   font-size:18px;
+  line-height:1.6;
 }
+
 .stats{
-  max-width:1100px;
-  margin:-30px auto 40px;
+  max-width:1150px;
+  margin:-45px auto 45px;
   padding:0 20px;
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:15px;
   position:relative;
+  z-index:5;
 }
+
 .stat{
   background:#121212;
   border:1px solid #292929;
-  border-radius:14px;
-  padding:22px;
+  border-radius:16px;
+  padding:23px;
   text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,.25);
 }
+
 .stat strong{
   display:block;
   font-size:30px;
   color:#e00000;
+  margin-bottom:7px;
 }
-.stat span{color:#999}
+
+.stat span{
+  color:#888;
+  font-size:14px;
+}
+
 .container{
-  max-width:1200px;
+  width:min(1250px,100%);
   margin:auto;
-  padding:20px;
+  padding:0 20px;
 }
+
+.toolbar{
+  background:#101010;
+  border:1px solid #292929;
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:25px;
+}
+
 .filters{
   display:grid;
   grid-template-columns:2fr 1fr 1fr;
   gap:12px;
-  margin-bottom:30px;
 }
-input,select{
+
+input,
+select{
   width:100%;
-  background:#111;
+  background:#080808;
   color:#fff;
   border:1px solid #333;
-  border-radius:9px;
+  border-radius:10px;
   padding:14px;
   outline:none;
 }
-input:focus,select:focus{border-color:#e00000}
-#estado{
-  text-align:center;
-  padding:30px;
-  color:#aaa;
+
+input:focus,
+select:focus{
+  border-color:#e00000;
 }
+
+.results{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+  color:#888;
+}
+
+.results strong{
+  color:#fff;
+}
+
 .grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:20px;
+  gap:22px;
 }
+
 .card{
   background:#111;
   border:1px solid #292929;
-  border-radius:16px;
+  border-radius:17px;
   overflow:hidden;
   transition:.2s;
 }
+
 .card:hover{
-  transform:translateY(-4px);
+  transform:translateY(-5px);
   border-color:#e00000;
+  box-shadow:0 15px 45px rgba(0,0,0,.35);
 }
-.card-img{
-  height:220px;
+
+.card-image{
+  height:235px;
   background:#181818;
   position:relative;
+  overflow:hidden;
 }
-.card-img img{
+
+.card-image img{
   width:100%;
   height:100%;
   object-fit:cover;
+  display:block;
 }
-.badge{
+
+.badges{
   position:absolute;
   top:12px;
   left:12px;
-  background:#e00000;
-  padding:6px 10px;
-  border-radius:6px;
-  font-size:12px;
-  font-weight:bold;
-}
-.card-body{padding:18px}
-.card h2{
-  font-size:21px;
-  margin-bottom:8px;
-}
-.info{
-  color:#999;
-  font-size:14px;
-  margin-bottom:12px;
-}
-.price{
-  color:#fff;
-  font-size:24px;
-  font-weight:bold;
-  margin-bottom:15px;
-}
-.buttons{
+  right:12px;
   display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+
+.badge{
+  background:#e00000;
+  color:#fff;
+  padding:6px 9px;
+  border-radius:6px;
+  font-size:11px;
+  font-weight:900;
+}
+
+.badge.dark{
+  background:#111;
+  border:1px solid #555;
+}
+
+.card-body{
+  padding:19px;
+}
+
+.card-title{
+  font-size:21px;
+  margin-bottom:9px;
+}
+
+.card-info{
+  color:#888;
+  font-size:14px;
+  line-height:1.7;
+}
+
+.card-price{
+  font-size:25px;
+  font-weight:900;
+  margin:15px 0;
+}
+
+.card-buttons{
+  display:grid;
+  grid-template-columns:1fr auto auto;
   gap:8px;
 }
-button{
+
+.btn{
   border:0;
-  cursor:pointer;
-  border-radius:8px;
-  padding:11px;
-  font-weight:bold;
+  border-radius:9px;
+  padding:11px 13px;
+  font-weight:800;
 }
-.view{
+
+.btn-primary{
   background:#e00000;
   color:#fff;
-  flex:1;
 }
-.share{
+
+.btn-secondary{
   background:#292929;
   color:#fff;
 }
-.favorite{
-  background:#292929;
-  color:#fff;
+
+.btn:hover{
+  opacity:.85;
 }
+
 .empty{
   grid-column:1/-1;
+  padding:70px 20px;
   text-align:center;
-  padding:60px 20px;
-  color:#888;
+  background:#101010;
+  border:1px solid #292929;
+  border-radius:16px;
 }
+
+.empty h2{
+  margin-bottom:10px;
+}
+
+.empty p{
+  color:#777;
+}
+
+.loading{
+  grid-column:1/-1;
+  text-align:center;
+  padding:70px 20px;
+  color:#aaa;
+}
+
+.error-box{
+  grid-column:1/-1;
+  background:#190000;
+  border:1px solid #e00000;
+  border-radius:15px;
+  padding:30px;
+  text-align:center;
+}
+
+.error-box h2{
+  color:#e00000;
+  margin-bottom:10px;
+}
+
+.error-box p{
+  color:#aaa;
+  margin-bottom:18px;
+}
+
 .modal{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.9);
-  z-index:100;
+  z-index:5000;
+  background:rgba(0,0,0,.92);
   padding:20px;
   overflow:auto;
 }
+
 .modal.active{
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
 }
+
 .modal-box{
   width:min(900px,100%);
   background:#111;
   border:1px solid #333;
-  border-radius:16px;
+  border-radius:18px;
   overflow:hidden;
 }
-.modal-img{
+
+.modal-top{
+  position:relative;
+}
+
+.modal-image{
   width:100%;
-  max-height:480px;
+  height:min(55vh,480px);
   object-fit:cover;
+  display:block;
+  background:#181818;
 }
-.modal-content{padding:25px}
-.close{
-  float:right;
-  background:#333;
+
+.modal-close{
+  position:absolute;
+  top:12px;
+  right:12px;
+  border:0;
+  background:rgba(0,0,0,.75);
   color:#fff;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  font-size:20px;
 }
+
+.modal-content{
+  padding:25px;
+}
+
+.modal-content h2{
+  font-size:30px;
+  margin-bottom:10px;
+}
+
+.modal-meta{
+  color:#999;
+  margin-bottom:15px;
+}
+
+.modal-price{
+  font-size:30px;
+  font-weight:900;
+  margin-bottom:15px;
+}
+
+.modal-description{
+  color:#aaa;
+  line-height:1.7;
+  white-space:pre-line;
+}
+
+.modal-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:22px;
+}
+
 .whatsapp{
   display:block;
-  text-align:center;
   background:#159447;
   color:#fff;
-  padding:14px;
-  border-radius:8px;
+  text-align:center;
   text-decoration:none;
-  margin-top:20px;
-  font-weight:bold;
+  border-radius:10px;
+  padding:14px;
+  font-weight:900;
 }
+
 footer{
-  margin-top:70px;
-  padding:30px;
+  margin-top:80px;
+  border-top:1px solid #222;
+  padding:35px 20px;
   text-align:center;
   color:#666;
-  border-top:1px solid #222;
 }
-@media(max-width:850px){
-  .grid{grid-template-columns:repeat(2,1fr)}
-  .filters{grid-template-columns:1fr}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translateX(-50%) translateY(100px);
+  background:#fff;
+  color:#000;
+  padding:13px 20px;
+  border-radius:10px;
+  font-weight:bold;
+  z-index:9000;
+  transition:.25s;
 }
-@media(max-width:550px){
-  .grid{grid-template-columns:1fr}
-  .stats{grid-template-columns:1fr}
-  .nav{flex-direction:column}
+
+.toast.show{
+  transform:translateX(-50%) translateY(0);
+}
+
+@media(max-width:950px){
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:700px){
+  .filters{
+    grid-template-columns:1fr;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .nav{
+    flex-direction:column;
+  }
+
+  .hero{
+    padding:55px 20px 85px;
+  }
+}
+
+@media(max-width:450px){
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .card-buttons{
+    grid-template-columns:1fr 1fr 1fr;
+  }
+
+  .card-buttons .btn-primary{
+    grid-column:1/-1;
+  }
+
+  .modal-actions{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
@@ -250,344 +518,310 @@ footer{
 
 <header>
   <div class="nav">
-    <div class="logo">MALESPINA <span>AUTOMOTORES PRO</span></div>
-    <a class="admin" href="admin.html">ADMIN PRO</a>
+
+    <div class="logo">
+      MALESPINA <span>AUTOMOTORES PRO</span>
+    </div>
+
+    <div class="nav-actions">
+      <a href="admin.html" class="nav-btn">
+        ADMIN PRO
+      </a>
+    </div>
+
   </div>
 </header>
 
 <section class="hero">
-  <h1>Encontrá tu próximo <span>vehículo</span></h1>
-  <p>MALESPINA Automotores · Catálogo PRO</p>
+
+  <small>MALESPINA AUTOMOTORES</small>
+
+  <h1>
+    Encontrá tu próximo
+    <span>vehículo</span>
+  </h1>
+
+  <p>
+    Catálogo profesional de vehículos disponibles.
+    Consultá, compartí y guardá tus favoritos.
+  </p>
+
 </section>
 
 <section class="stats">
+
   <div class="stat">
-    <strong id="total">0</strong>
+    <strong id="statTotal">0</strong>
     <span>Vehículos</span>
   </div>
+
   <div class="stat">
-    <strong id="destacados">0</strong>
+    <strong id="statDestacados">0</strong>
     <span>Destacados</span>
   </div>
+
   <div class="stat">
-    <strong id="ofertas">0</strong>
+    <strong id="statOfertas">0</strong>
     <span>Ofertas</span>
   </div>
+
+  <div class="stat">
+    <strong id="statFavoritos">0</strong>
+    <span>Favoritos</span>
+  </div>
+
 </section>
 
 <main class="container">
 
-  <div class="filters">
-    <input
-      id="busqueda"
-      type="text"
-      placeholder="Buscar marca, modelo..."
-    >
+  <section class="toolbar">
 
-    <select id="marca">
-      <option value="">Todas las marcas</option>
-    </select>
+    <div class="filters">
 
-    <select id="orden">
-      <option value="nuevo">Más nuevos</option>
-      <option value="precioMenor">Precio menor</option>
-      <option value="precioMayor">Precio mayor</option>
-    </select>
+      <input
+        id="busqueda"
+        type="text"
+        placeholder="Buscar marca, modelo o palabra..."
+      >
+
+      <select id="marca">
+        <option value="">
+          Todas las marcas
+        </option>
+      </select>
+
+      <select id="orden">
+        <option value="nuevo">
+          Más recientes
+        </option>
+
+        <option value="precioMenor">
+          Precio menor
+        </option>
+
+        <option value="precioMayor">
+          Precio mayor
+        </option>
+
+        <option value="anioMayor">
+          Año más nuevo
+        </option>
+
+      </select>
+
+    </div>
+
+  </section>
+
+  <div class="results">
+    <div>
+      Resultados:
+      <strong id="cantidadResultados">0</strong>
+    </div>
+
+    <div>
+      MALESPINA PRO
+    </div>
   </div>
 
-  <div id="estado">Cargando vehículos...</div>
+  <section id="listaAutos" class="grid">
 
-  <div id="listaAutos" class="grid"></div>
+    <div class="loading">
+      Cargando vehículos...
+    </div>
+
+  </section>
 
 </main>
 
-<div id="modal" class="modal">
-  <div class="modal-box">
-    <img id="modalImg" class="modal-img" src="" alt="">
-    <div class="modal-content">
-      <button class="close" onclick="cerrarModal()">Cerrar</button>
-      <h2 id="modalTitulo"></h2>
-      <p id="modalInfo" class="info"></p>
-      <div id="modalPrecio" class="price"></div>
-      <p id="modalDescripcion" class="info"></p>
-
-      <a
-        id="modalWhatsapp"
-        class="whatsapp"
-        target="_blank"
-        href="#"
-      >
-        Consultar por WhatsApp
-      </a>
-    </div>
-  </div>
-</div>
-
 <footer>
-  MALESPINA Automotores · Salta
+  MALESPINA Automotores · Salta<br>
+  WhatsApp: 387 863 6763
 </footer>
 
+<div id="modal" class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-top">
+
+      <img
+        id="modalImagen"
+        class="modal-image"
+        src=""
+        alt="Vehículo"
+      >
+
+      <button
+        class="modal-close"
+        onclick="cerrarModal()"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <div class="modal-content">
+
+      <h2 id="modalTitulo"></h2>
+
+      <div
+        id="modalMeta"
+        class="modal-meta"
+      ></div>
+
+      <div
+        id="modalPrecio"
+        class="modal-price"
+      ></div>
+
+      <div
+        id="modalDescripcion"
+        class="modal-description"
+      ></div>
+
+      <div class="modal-actions">
+
+        <a
+          id="modalWhatsapp"
+          class="whatsapp"
+          href="#"
+          target="_blank"
+        >
+          Consultar por WhatsApp
+        </a>
+
+        <button
+          class="btn btn-secondary"
+          onclick="compartirVehiculoActual()"
+        >
+          Compartir vehículo
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
 <script>
+
+/* =========================================================
+   CONFIGURACIÓN PRO
+   ========================================================= */
+
 const SUPABASE_URL =
-"https://mbrcbeqbtllajgcqujxv.supabase.co";
+  "https://mbrcbeqbtllajgcqujxv.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_-j0aKO6FadT11STSQ7w0jg_1YP-dtTS";
+  "sb_publishable_-j0aKO6FadT11STSQ7w0jg_1YP-dtTS";
 
-/* IMPORTANTE:
-   PRO usa EXCLUSIVAMENTE esta tabla */
-const TABLA = "vehiculos_pro";
+/*
+  IMPORTANTE:
+
+  PRO usa EXCLUSIVAMENTE:
+
+  vehiculos_pro
+
+  NO usa:
+  vehiculos
+  vehiculos_standard
+*/
+
+const TABLA_PRO = "vehiculos_pro";
+
+const TABLA_ANALYTICS = "analytics_eventos";
 
 const WHATSAPP = "543878636763";
 
-let vehiculos = [];
-let filtrados = [];
 
-async function cargarVehiculos(){
+/* =========================================================
+   VARIABLES
+   ========================================================= */
 
-  const estado = document.getElementById("estado");
+let todosLosVehiculos = [];
 
-  estado.textContent = "Cargando vehículos...";
+let vehiculosMostrados = [];
 
-  try{
+let vehiculoActual = null;
 
-    const url =
-      SUPABASE_URL +
-      "/rest/v1/" +
-      TABLA +
-      "?select=*&order=id.desc";
 
-    const respuesta = await fetch(url,{
-      method:"GET",
-      headers:{
-        "apikey":SUPABASE_KEY,
-        "Authorization":"Bearer " + SUPABASE_KEY,
-        "Content-Type":"application/json"
-      }
-    });
+/* =========================================================
+   ELEMENTOS
+   ========================================================= */
 
-    const texto = await respuesta.text();
+const listaAutos =
+  document.getElementById("listaAutos");
 
-    if(!respuesta.ok){
-      throw new Error(texto);
-    }
+const busqueda =
+  document.getElementById("busqueda");
 
-    vehiculos = JSON.parse(texto);
+const marca =
+  document.getElementById("marca");
 
-    filtrados = [...vehiculos];
+const orden =
+  document.getElementById("orden");
 
-    actualizarEstadisticas();
-    cargarMarcas();
-    mostrarVehiculos();
+const cantidadResultados =
+  document.getElementById("cantidadResultados");
 
-  }catch(error){
 
-    console.error("ERROR PRO:",error);
+/* =========================================================
+   UTILIDADES
+   ========================================================= */
 
-    estado.innerHTML = `
-      <div style="color:#e00000;font-weight:bold">
-        No se pudieron cargar los vehículos.
-      </div>
-      <div style="margin-top:10px;font-size:13px;color:#777">
-        Error de conexión con vehiculos_pro.
-      </div>
-    `;
-  }
+function esc(valor){
+
+  return String(valor ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 }
 
-function actualizarEstadisticas(){
 
-  document.getElementById("total").textContent =
-    vehiculos.filter(v => !v.vendido).length;
+function mostrarToast(mensaje){
 
-  document.getElementById("destacados").textContent =
-    vehiculos.filter(v => v.destacado && !v.vendido).length;
+  const toast =
+    document.getElementById("toast");
 
-  document.getElementById("ofertas").textContent =
-    vehiculos.filter(v => v.oferta && !v.vendido).length;
+  toast.textContent = mensaje;
+
+  toast.classList.add("show");
+
+  setTimeout(()=>{
+    toast.classList.remove("show");
+  },2200);
 }
 
-function cargarMarcas(){
 
-  const select = document.getElementById("marca");
+function precioFormateado(precio){
 
-  const marcas = [
-    ...new Set(
-      vehiculos
-        .map(v => v.marca)
-        .filter(Boolean)
-    )
-  ].sort();
-
-  select.innerHTML =
-    `<option value="">Todas las marcas</option>`;
-
-  marcas.forEach(marca => {
-
-    const option = document.createElement("option");
-
-    option.value = marca;
-    option.textContent = marca;
-
-    select.appendChild(option);
-  });
-}
-
-function aplicarFiltros(){
-
-  const texto =
-    document
-      .getElementById("busqueda")
-      .value
-      .toLowerCase()
-      .trim();
-
-  const marca =
-    document.getElementById("marca").value;
-
-  const orden =
-    document.getElementById("orden").value;
-
-  filtrados = vehiculos.filter(v => {
-
-    if(v.vendido) return false;
-
-    const contenido = `
-      ${v.marca || ""}
-      ${v.modelo || ""}
-      ${v.descripcion || ""}
-    `.toLowerCase();
-
-    const coincideTexto =
-      !texto || contenido.includes(texto);
-
-    const coincideMarca =
-      !marca || v.marca === marca;
-
-    return coincideTexto && coincideMarca;
-  });
-
-  if(orden === "precioMenor"){
-    filtrados.sort((a,b)=>
-      Number(a.precio || 0) -
-      Number(b.precio || 0)
-    );
+  if(
+    precio === null ||
+    precio === undefined ||
+    precio === "" ||
+    Number(precio) === 0
+  ){
+    return "Consultar precio";
   }
 
-  if(orden === "precioMayor"){
-    filtrados.sort((a,b)=>
-      Number(b.precio || 0) -
-      Number(a.precio || 0)
-    );
-  }
-
-  mostrarVehiculos();
+  return "$ " +
+    Number(precio).toLocaleString("es-AR");
 }
 
-function mostrarVehiculos(){
 
-  const contenedor =
-    document.getElementById("listaAutos");
+function imagenVehiculo(auto){
 
-  const estado =
-    document.getElementById("estado");
-
-  estado.textContent = "";
-
-  contenedor.innerHTML = "";
-
-  if(!filtrados.length){
-
-    contenedor.innerHTML = `
-      <div class="empty">
-        <h2>No hay vehículos disponibles</h2>
-        <p>Probá cambiando los filtros.</p>
-      </div>
-    `;
-
-    return;
-  }
-
-  filtrados.forEach(auto => {
-
-    const imagen = obtenerImagen(auto);
-
-    const precio =
-      auto.precio
-      ? "$ " + Number(auto.precio).toLocaleString("es-AR")
-      : "Consultar";
-
-    const destacado =
-      auto.destacado
-      ? `<div class="badge">DESTACADO</div>`
-      : "";
-
-    const card = document.createElement("article");
-
-    card.className = "card";
-
-    card.innerHTML = `
-      <div class="card-img">
-        <img
-          src="${imagen}"
-          alt="${esc(auto.marca)} ${esc(auto.modelo)}"
-          onerror="this.src='https://via.placeholder.com/800x500?text=MALESPINA+AUTOMOTORES'"
-        >
-        ${destacado}
-      </div>
-
-      <div class="card-body">
-
-        <h2>
-          ${esc(auto.marca || "")}
-          ${esc(auto.modelo || "")}
-        </h2>
-
-        <div class="info">
-          ${auto.anio || "Año no informado"}
-          ·
-          ${auto.kilometros
-            ? Number(auto.kilometros).toLocaleString("es-AR") + " km"
-            : "Km no informado"}
-        </div>
-
-        <div class="price">${precio}</div>
-
-        <div class="buttons">
-
-          <button
-            class="view"
-            onclick="abrirVehiculo(${auto.id})"
-          >
-            Ver vehículo
-          </button>
-
-          <button
-            class="favorite"
-            onclick="favorito(${auto.id})"
-          >
-            ♥
-          </button>
-
-          <button
-            class="share"
-            onclick="compartir(${auto.id})"
-          >
-            ↗
-          </button>
-
-        </div>
-
-      </div>
-    `;
-
-    contenedor.appendChild(card);
-  });
-}
-
-function obtenerImagen(auto){
-
-  if(auto.imagen){
+  if(
+    auto.imagen &&
+    String(auto.imagen).trim()
+  ){
     return auto.imagen;
   }
 
@@ -598,93 +832,694 @@ function obtenerImagen(auto){
     return auto.imagenes[0];
   }
 
-  return "https://via.placeholder.com/800x500?text=MALESPINA+AUTOMOTORES";
+  return "https://via.placeholder.com/1000x650?text=MALESPINA+AUTOMOTORES";
 }
+
+
+/* =========================================================
+   CARGAR VEHÍCULOS
+   ========================================================= */
+
+async function cargarVehiculos(){
+
+  listaAutos.innerHTML = `
+    <div class="loading">
+      Cargando vehículos...
+    </div>
+  `;
+
+  try{
+
+    const url =
+      SUPABASE_URL +
+      "/rest/v1/" +
+      TABLA_PRO +
+      "?select=*&order=id.desc";
+
+    const controlador =
+      new AbortController();
+
+    const tiempo =
+      setTimeout(
+        ()=>controlador.abort(),
+        12000
+      );
+
+    const respuesta =
+      await fetch(
+        url,
+        {
+          method:"GET",
+          signal:controlador.signal,
+          headers:{
+            "apikey":SUPABASE_KEY,
+            "Authorization":
+              "Bearer " + SUPABASE_KEY
+          }
+        }
+      );
+
+    clearTimeout(tiempo);
+
+    if(!respuesta.ok){
+
+      const error =
+        await respuesta.text();
+
+      throw new Error(
+        "Supabase " +
+        respuesta.status +
+        ": " +
+        error
+      );
+    }
+
+    const datos =
+      await respuesta.json();
+
+    if(!Array.isArray(datos)){
+
+      throw new Error(
+        "La respuesta de Supabase no es una lista."
+      );
+    }
+
+    todosLosVehiculos = datos;
+
+    console.log(
+      "PRO vehículos:",
+      todosLosVehiculos
+    );
+
+    actualizarEstadisticas();
+
+    cargarMarcas();
+
+    aplicarFiltros();
+
+  }catch(error){
+
+    console.error(
+      "ERROR CARGANDO PRO:",
+      error
+    );
+
+    listaAutos.innerHTML = `
+      <div class="error-box">
+
+        <h2>
+          No se pudieron cargar los vehículos
+        </h2>
+
+        <p>
+          La página PRO no pudo comunicarse
+          correctamente con la base de datos.
+        </p>
+
+        <button
+          class="btn btn-primary"
+          onclick="cargarVehiculos()"
+        >
+          Reintentar
+        </button>
+
+      </div>
+    `;
+  }
+
+}
+
+
+/* =========================================================
+   ESTADÍSTICAS
+   ========================================================= */
+
+function actualizarEstadisticas(){
+
+  document.getElementById("statTotal")
+    .textContent =
+      todosLosVehiculos.length;
+
+  document.getElementById("statDestacados")
+    .textContent =
+      todosLosVehiculos.filter(
+        v => v.destacado === true
+      ).length;
+
+  document.getElementById("statOfertas")
+    .textContent =
+      todosLosVehiculos.filter(
+        v => v.oferta === true
+      ).length;
+
+  const favoritos =
+    obtenerFavoritos();
+
+  document.getElementById("statFavoritos")
+    .textContent =
+      favoritos.length;
+}
+
+
+/* =========================================================
+   MARCAS
+   ========================================================= */
+
+function cargarMarcas(){
+
+  const marcas = [
+    ...new Set(
+      todosLosVehiculos
+        .map(v => v.marca)
+        .filter(Boolean)
+    )
+  ].sort();
+
+  marca.innerHTML = `
+    <option value="">
+      Todas las marcas
+    </option>
+  `;
+
+  marcas.forEach(nombre => {
+
+    const option =
+      document.createElement("option");
+
+    option.value = nombre;
+
+    option.textContent = nombre;
+
+    marca.appendChild(option);
+
+  });
+
+}
+
+
+/* =========================================================
+   FILTROS
+   ========================================================= */
+
+function aplicarFiltros(){
+
+  const texto =
+    busqueda.value
+      .toLowerCase()
+      .trim();
+
+  const marcaSeleccionada =
+    marca.value;
+
+  const tipoOrden =
+    orden.value;
+
+  vehiculosMostrados =
+    todosLosVehiculos.filter(auto => {
+
+      const contenido = `
+        ${auto.marca || ""}
+        ${auto.modelo || ""}
+        ${auto.anio || ""}
+        ${auto.descripcion || ""}
+        ${auto.combustible || ""}
+        ${auto.transmision || ""}
+      `.toLowerCase();
+
+      const coincideTexto =
+        !texto ||
+        contenido.includes(texto);
+
+      const coincideMarca =
+        !marcaSeleccionada ||
+        auto.marca === marcaSeleccionada;
+
+      return
+        coincideTexto &&
+        coincideMarca;
+
+    });
+
+
+  if(tipoOrden === "precioMenor"){
+
+    vehiculosMostrados.sort(
+      (a,b) =>
+        Number(a.precio || 0) -
+        Number(b.precio || 0)
+    );
+
+  }
+
+
+  if(tipoOrden === "precioMayor"){
+
+    vehiculosMostrados.sort(
+      (a,b) =>
+        Number(b.precio || 0) -
+        Number(a.precio || 0)
+    );
+
+  }
+
+
+  if(tipoOrden === "anioMayor"){
+
+    vehiculosMostrados.sort(
+      (a,b) =>
+        Number(b.anio || 0) -
+        Number(a.anio || 0)
+    );
+
+  }
+
+
+  mostrarVehiculos();
+
+}
+
+
+/* =========================================================
+   MOSTRAR VEHÍCULOS
+   ========================================================= */
+
+function mostrarVehiculos(){
+
+  listaAutos.innerHTML = "";
+
+  cantidadResultados.textContent =
+    vehiculosMostrados.length;
+
+
+  if(!vehiculosMostrados.length){
+
+    listaAutos.innerHTML = `
+      <div class="empty">
+
+        <h2>
+          No encontramos vehículos
+        </h2>
+
+        <p>
+          Probá con otra búsqueda o marca.
+        </p>
+
+      </div>
+    `;
+
+    return;
+  }
+
+
+  vehiculosMostrados.forEach(auto => {
+
+    const card =
+      document.createElement("article");
+
+    card.className = "card";
+
+
+    const imagen =
+      imagenVehiculo(auto);
+
+
+    let badges = "";
+
+
+    if(auto.destacado){
+
+      badges += `
+        <span class="badge">
+          DESTACADO
+        </span>
+      `;
+
+    }
+
+
+    if(auto.oferta){
+
+      badges += `
+        <span class="badge">
+          OFERTA
+        </span>
+      `;
+
+    }
+
+
+    if(auto.apto_credito){
+
+      badges += `
+        <span class="badge dark">
+          APTO CRÉDITO
+        </span>
+      `;
+
+    }
+
+
+    if(auto.financiado){
+
+      badges += `
+        <span class="badge dark">
+          FINANCIACIÓN
+        </span>
+      `;
+
+    }
+
+
+    const km =
+      auto.kilometros !== null &&
+      auto.kilometros !== undefined &&
+      auto.kilometros !== ""
+        ? Number(auto.kilometros)
+            .toLocaleString("es-AR") +
+          " km"
+        : "Km no informado";
+
+
+    const detalles = [
+      auto.anio || null,
+      km,
+      auto.combustible || null,
+      auto.transmision || null
+    ]
+    .filter(Boolean)
+    .join(" · ");
+
+
+    const esFavorito =
+      obtenerFavoritos().includes(
+        Number(auto.id)
+      );
+
+
+    card.innerHTML = `
+
+      <div class="card-image">
+
+        <img
+          src="${esc(imagen)}"
+          alt="${esc(auto.marca)} ${esc(auto.modelo)}"
+          onerror="this.onerror=null;this.src='https://via.placeholder.com/1000x650?text=MALESPINA+AUTOMOTORES';"
+        >
+
+        <div class="badges">
+          ${badges}
+        </div>
+
+      </div>
+
+
+      <div class="card-body">
+
+        <h2 class="card-title">
+          ${esc(auto.marca || "")}
+          ${esc(auto.modelo || "")}
+        </h2>
+
+
+        <div class="card-info">
+          ${esc(detalles)}
+        </div>
+
+
+        <div class="card-price">
+          ${precioFormateado(auto.precio)}
+        </div>
+
+
+        <div class="card-buttons">
+
+          <button
+            class="btn btn-primary"
+            onclick="abrirVehiculo(${Number(auto.id)})"
+          >
+            Ver vehículo
+          </button>
+
+
+          <button
+            class="btn btn-secondary"
+            title="Favorito"
+            onclick="toggleFavorito(${Number(auto.id)})"
+          >
+            ${esFavorito ? "♥" : "♡"}
+          </button>
+
+
+          <button
+            class="btn btn-secondary"
+            title="Compartir"
+            onclick="compartirVehiculo(${Number(auto.id)})"
+          >
+            ↗
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    listaAutos.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================================================
+   FAVORITOS
+   ========================================================= */
+
+function obtenerFavoritos(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(
+        "malespina_pro_favoritos"
+      ) || "[]"
+    );
+
+  }catch(e){
+
+    return [];
+
+  }
+
+}
+
+
+function guardarFavoritos(lista){
+
+  localStorage.setItem(
+    "malespina_pro_favoritos",
+    JSON.stringify(lista)
+  );
+
+}
+
+
+function toggleFavorito(id){
+
+  let favoritos =
+    obtenerFavoritos();
+
+  id = Number(id);
+
+
+  if(favoritos.includes(id)){
+
+    favoritos =
+      favoritos.filter(
+        x => Number(x) !== id
+      );
+
+    mostrarToast(
+      "Eliminado de favoritos"
+    );
+
+  }else{
+
+    favoritos.push(id);
+
+    registrarEvento(
+      "favorito",
+      id
+    );
+
+    mostrarToast(
+      "Agregado a favoritos"
+    );
+
+  }
+
+
+  guardarFavoritos(favoritos);
+
+  actualizarEstadisticas();
+
+  mostrarVehiculos();
+
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
 
 function abrirVehiculo(id){
 
   const auto =
-    vehiculos.find(v => Number(v.id) === Number(id));
+    todosLosVehiculos.find(
+      v => Number(v.id) === Number(id)
+    );
 
   if(!auto) return;
 
-  document.getElementById("modalImg").src =
-    obtenerImagen(auto);
 
-  document.getElementById("modalTitulo").textContent =
-    `${auto.marca || ""} ${auto.modelo || ""}`;
+  vehiculoActual = auto;
 
-  document.getElementById("modalInfo").textContent =
-    `${auto.anio || ""} · ${
-      auto.kilometros
-      ? Number(auto.kilometros).toLocaleString("es-AR") + " km"
-      : "Km no informado"
-    }`;
 
-  document.getElementById("modalPrecio").textContent =
-    auto.precio
-    ? "$ " + Number(auto.precio).toLocaleString("es-AR")
-    : "Consultar precio";
+  document.getElementById("modalImagen")
+    .src =
+      imagenVehiculo(auto);
 
-  document.getElementById("modalDescripcion").textContent =
-    auto.descripcion || "Consultanos para recibir más información.";
+
+  document.getElementById("modalTitulo")
+    .textContent =
+      `${auto.marca || ""} ${auto.modelo || ""}`;
+
+
+  const meta = [
+    auto.anio,
+    auto.kilometros
+      ? Number(auto.kilometros)
+          .toLocaleString("es-AR") + " km"
+      : null,
+    auto.combustible,
+    auto.transmision
+  ]
+  .filter(Boolean)
+  .join(" · ");
+
+
+  document.getElementById("modalMeta")
+    .textContent =
+      meta || "Consultar detalles";
+
+
+  document.getElementById("modalPrecio")
+    .textContent =
+      precioFormateado(auto.precio);
+
+
+  document.getElementById("modalDescripcion")
+    .textContent =
+      auto.descripcion ||
+      "Consultanos para recibir más información sobre este vehículo.";
+
 
   const mensaje =
     encodeURIComponent(
-      `Hola! Quiero consultar por el ${auto.marca || ""} ${auto.modelo || ""} ${auto.anio || ""}.`
+      `Hola! Quiero consultar por el ${auto.marca || ""} ${auto.modelo || ""}${auto.anio ? " " + auto.anio : ""}.`
     );
 
-  document.getElementById("modalWhatsapp").href =
-    `https://wa.me/${WHATSAPP}?text=${mensaje}`;
 
-  document.getElementById("modal").classList.add("active");
+  document.getElementById("modalWhatsapp")
+    .href =
+      `https://wa.me/${WHATSAPP}?text=${mensaje}`;
 
-  registrarEvento("visita",auto.id);
+
+  document.getElementById("modal")
+    .classList.add("active");
+
+
+  registrarEvento(
+    "visita_vehiculo",
+    auto.id
+  );
+
 }
+
+
+/* =========================================================
+   CERRAR MODAL
+   ========================================================= */
 
 function cerrarModal(){
-  document.getElementById("modal").classList.remove("active");
+
+  document.getElementById("modal")
+    .classList.remove("active");
+
+  vehiculoActual = null;
+
 }
 
-function favorito(id){
 
-  let favoritos =
-    JSON.parse(localStorage.getItem("malespina_favoritos") || "[]");
+/* =========================================================
+   WHATSAPP
+   ========================================================= */
 
-  if(favoritos.includes(id)){
-    favoritos =
-      favoritos.filter(x => x !== id);
-  }else{
-    favoritos.push(id);
-    registrarEvento("favorito",id);
-  }
+document
+  .getElementById("modalWhatsapp")
+  .addEventListener(
+    "click",
+    function(){
 
-  localStorage.setItem(
-    "malespina_favoritos",
-    JSON.stringify(favoritos)
+      if(vehiculoActual){
+
+        registrarEvento(
+          "whatsapp",
+          vehiculoActual.id
+        );
+
+      }
+
+    }
   );
-}
 
-async function compartir(id){
+
+/* =========================================================
+   COMPARTIR
+   ========================================================= */
+
+async function compartirVehiculo(id){
 
   const auto =
-    vehiculos.find(v => Number(v.id) === Number(id));
+    todosLosVehiculos.find(
+      v => Number(v.id) === Number(id)
+    );
 
   if(!auto) return;
+
 
   const url =
     window.location.origin +
     window.location.pathname +
     "?vehiculo=" +
-    auto.id;
+    encodeURIComponent(auto.id);
+
 
   try{
 
-    if(navigator.share){
+    if(
+      navigator.share &&
+      /Android|iPhone|iPad/i.test(
+        navigator.userAgent
+      )
+    ){
 
       await navigator.share({
-        title:`${auto.marca} ${auto.modelo}`,
-        text:"Mirá este vehículo de MALESPINA Automotores",
+        title:
+          `${auto.marca || ""} ${auto.modelo || ""}`,
+        text:
+          "Mirá este vehículo de MALESPINA Automotores",
         url:url
       });
 
@@ -692,79 +1527,213 @@ async function compartir(id){
 
       await navigator.clipboard.writeText(url);
 
-      alert("Link copiado");
+      mostrarToast(
+        "Link copiado"
+      );
 
     }
 
-    registrarEvento("compartido",id);
 
-  }catch(e){}
+    registrarEvento(
+      "compartido",
+      auto.id
+    );
+
+  }catch(error){
+
+    console.log(
+      "Compartir cancelado"
+    );
+
+  }
+
 }
 
-async function registrarEvento(tipo,vehiculoId){
+
+async function compartirVehiculoActual(){
+
+  if(!vehiculoActual) return;
+
+  await compartirVehiculo(
+    vehiculoActual.id
+  );
+
+}
+
+
+/* =========================================================
+   ANALYTICS
+   ========================================================= */
+
+async function registrarEvento(
+  tipo,
+  vehiculoId
+){
 
   try{
 
     await fetch(
       SUPABASE_URL +
-      "/rest/v1/analytics_eventos",
+      "/rest/v1/" +
+      TABLA_ANALYTICS,
       {
         method:"POST",
+
         headers:{
           "apikey":SUPABASE_KEY,
-          "Authorization":"Bearer " + SUPABASE_KEY,
-          "Content-Type":"application/json",
-          "Prefer":"return=minimal"
+          "Authorization":
+            "Bearer " + SUPABASE_KEY,
+          "Content-Type":
+            "application/json",
+          "Prefer":
+            "return=minimal"
         },
+
         body:JSON.stringify({
-          tipo:tipo,
-          vehiculo_id:vehiculoId
+
+          tipo:String(tipo),
+
+          vehiculo_id:
+            vehiculoId === null ||
+            vehiculoId === undefined
+              ? null
+              : Number(vehiculoId)
+
         })
       }
     );
 
-  }catch(e){
+  }catch(error){
 
-    console.log("Analytics:",e);
+    console.log(
+      "Analytics no disponible:",
+      error
+    );
 
   }
+
 }
 
-function esc(valor){
 
-  return String(valor)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
+/* =========================================================
+   BÚSQUEDA
+   ========================================================= */
 
-document
-  .getElementById("busqueda")
-  .addEventListener("input",aplicarFiltros);
+let temporizadorBusqueda = null;
 
-document
-  .getElementById("marca")
-  .addEventListener("change",aplicarFiltros);
+busqueda.addEventListener(
+  "input",
+  function(){
 
-document
-  .getElementById("orden")
-  .addEventListener("change",aplicarFiltros);
+    clearTimeout(
+      temporizadorBusqueda
+    );
+
+    temporizadorBusqueda =
+      setTimeout(
+        aplicarFiltros,
+        200
+      );
+
+  }
+);
+
+
+marca.addEventListener(
+  "change",
+  aplicarFiltros
+);
+
+
+orden.addEventListener(
+  "change",
+  aplicarFiltros
+);
+
+
+/* =========================================================
+   CERRAR MODAL AL TOCAR AFUERA
+   ========================================================= */
 
 document
   .getElementById("modal")
-  .addEventListener("click",function(e){
+  .addEventListener(
+    "click",
+    function(event){
 
-    if(e.target === this){
+      if(event.target === this){
+        cerrarModal();
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   ESCAPE PARA CERRAR
+   ========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key === "Escape"){
       cerrarModal();
     }
 
-  });
+  }
+);
 
-cargarVehiculos();
 
-registrarEvento("visita",null);
+/* =========================================================
+   ABRIR VEHÍCULO DESDE URL
+   ========================================================= */
+
+function abrirVehiculoDesdeURL(){
+
+  const parametros =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const id =
+    parametros.get("vehiculo");
+
+  if(!id) return;
+
+
+  const auto =
+    todosLosVehiculos.find(
+      v => Number(v.id) === Number(id)
+    );
+
+  if(auto){
+
+    abrirVehiculo(auto.id);
+
+  }
+
+}
+
+
+/* =========================================================
+   VISITA GENERAL
+   ========================================================= */
+
+registrarEvento(
+  "visita",
+  null
+);
+
+
+/* =========================================================
+   INICIO
+   ========================================================= */
+
+cargarVehiculos()
+  .then(
+    () => abrirVehiculoDesdeURL()
+  );
 
 </script>
 
